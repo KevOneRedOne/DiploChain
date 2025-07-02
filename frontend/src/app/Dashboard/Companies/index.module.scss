@@ -294,6 +294,22 @@ $border-color: #e2e8f0;
           @include button-base;
           padding: 0.5rem 1rem;
           font-size: 0.875rem;
+          text-decoration: none;
+          display: inline-block;
+
+          &:hover {
+            color: white;
+          }
+        }
+      }
+
+      .emptyRow {
+        text-align: center;
+
+        .td {
+          padding: 2rem 1rem;
+          color: #6b7280;
+          font-style: italic;
         }
       }
     }
@@ -408,4 +424,41 @@ $border-color: #e2e8f0;
       }
     }
   }
+}
+
+// États vides
+.emptyState {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+
+  p {
+    margin: 0.5rem 0;
+    color: #6b7280;
+
+    &:first-child {
+      font-weight: 600;
+      color: #374151;
+    }
+  }
+}
+
+// Sections d'évaluation
+.evaluationsHistory,
+.mockCandidates {
+  margin-top: 2rem;
+
+  h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin-bottom: 1rem;
+  }
+}
+
+.evaluationDate {
+  font-size: 0.8rem;
+  color: $text-muted;
+  margin-top: 0.5rem;
 }

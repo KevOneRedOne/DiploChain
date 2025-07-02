@@ -12,7 +12,14 @@ export const DIPLOMA_NFT_ABI = [
   'function balanceOf(address owner) view returns (uint256)',
   'function tokenURI(uint256 tokenId) view returns (string)',
   'function owner() view returns (address)',
-  'event DiplomaMinted(address indexed to, uint256 indexed tokenId, string studentName)',
+  'function companies(address) view returns (uint256 id, string name, string country)',
+  'function students(address) view returns (uint256 id, string nom, string prenom, string email)',
+  'function schools(address) view returns (uint256 id, string name, string country, bool accredited)',
+  'function diplomaToStudent(uint256) view returns (uint256)',
+  'function diplomaToSchool(uint256) view returns (uint256)',
+  'function isSchoolAccredited(address) view returns (bool)',
+  'event DiplomaMinted(address indexed to, uint256 indexed tokenId, string studentName, string institution)',
+  'event SchoolAccredited(address indexed addedBy, address schoolAcc)',
 ];
 
 export const DIPLOMA_TOKEN_ABI = [
