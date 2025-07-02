@@ -1,0 +1,195 @@
+// Variables
+$primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$crypto-blue: linear-gradient(45deg, #00d2ff, #3a7bd5);
+$gold-gradient: linear-gradient(45deg, #ffd700, #ffb347);
+$white-alpha-1: rgba(255, 255, 255, 0.1);
+$white-alpha-2: rgba(255, 255, 255, 0.2);
+$white-alpha-3: rgba(255, 255, 255, 0.3);
+$white-alpha-7: rgba(255, 255, 255, 0.7);
+$white-alpha-9: rgba(255, 255, 255, 0.9);
+$red-alpha-2: rgba(255, 69, 58, 0.2);
+$red-alpha-3: rgba(255, 69, 58, 0.3);
+$shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+$crypto-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+$crypto-shadow-hover: 0 6px 20px rgba(0, 210, 255, 0.4);
+
+.cryptoHeader {
+  background: $primary-gradient;
+  box-shadow: $shadow;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid $white-alpha-1;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  .logoIcon {
+    font-size: 2rem;
+  }
+
+  .logoText {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0;
+  }
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
+
+  .navLink {
+    color: $white-alpha-9;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+      color: white;
+      background: $white-alpha-1;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.walletSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.walletConnected {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+
+  @media (max-width: 768px) {
+    align-items: center;
+  }
+
+  .balanceDisplay {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: $white-alpha-1;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+
+    .balanceLabel {
+      color: $white-alpha-7;
+    }
+
+    .balanceAmount {
+      color: #ffd700;
+      font-weight: 600;
+    }
+  }
+
+  .accountInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    .accountAddress {
+      color: white;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-family: monospace;
+      font-size: 0.875rem;
+      border: 1px solid $white-alpha-2;
+    }
+
+    .disconnectBtn {
+      background: $red-alpha-2;
+      color: white;
+      border: 1px solid $red-alpha-3;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: $red-alpha-3;
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+.connectBtn {
+  background: $crypto-blue;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: $crypto-shadow;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: $crypto-shadow-hover;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid $white-alpha-3;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

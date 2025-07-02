@@ -1,0 +1,268 @@
+// Variables
+$primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$crypto-blue: linear-gradient(45deg, #00d2ff, #3a7bd5);
+$gold-gradient: linear-gradient(45deg, #ffd700, #ffb347);
+$white-alpha-1: rgba(255, 255, 255, 0.1);
+$white-alpha-3: rgba(255, 255, 255, 0.3);
+$white-alpha-6: rgba(255, 255, 255, 0.6);
+$white-alpha-8: rgba(255, 255, 255, 0.8);
+$white-alpha-9: rgba(255, 255, 255, 0.9);
+
+// Mixins
+@mixin button-base($padding: 1rem 2rem) {
+  padding: $padding;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
+@mixin card-shadow {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+// Hero Section
+.hero {
+  background: $primary-gradient;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+}
+
+.heroContent {
+  text-align: center;
+  max-width: 800px;
+  z-index: 1;
+  position: relative;
+
+  .heroTitle {
+    font-size: 4rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+
+  .heroSubtitle {
+    font-size: 1.5rem;
+    color: $white-alpha-9;
+    margin-bottom: 1rem;
+    font-weight: 300;
+
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  .heroDescription {
+    font-size: 1.1rem;
+    color: $white-alpha-8;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+  }
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .primaryBtn {
+    @include button-base;
+    background: $crypto-blue;
+    color: white;
+    box-shadow: 0 8px 25px rgba(0, 210, 255, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 210, 255, 0.4);
+    }
+  }
+
+  .secondaryBtn {
+    @include button-base;
+    background: $white-alpha-1;
+    color: white;
+    border: 2px solid $white-alpha-3;
+
+    &:hover {
+      background: $white-alpha-3;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Features Section
+.featuresSection {
+  padding: 5rem 2rem;
+  background: #f8fafc;
+
+  .sectionTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #1a202c;
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .featureCard {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    @include card-shadow;
+
+    .featureIcon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .featureTitle {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #2d3748;
+    }
+
+    .featureText {
+      color: #718096;
+      line-height: 1.6;
+    }
+  }
+}
+
+// Stats Section
+.statsSection {
+  background: $primary-gradient;
+  padding: 4rem 2rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+
+  .statCard {
+    text-align: center;
+    color: white;
+
+    .statNumber {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      background: $gold-gradient;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+
+      @media (max-width: 768px) {
+        font-size: 2.5rem;
+      }
+    }
+
+    .statLabel {
+      font-size: 1.1rem;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+  }
+}
+
+// CTA Section
+.ctaSection {
+  padding: 5rem 2rem;
+  text-align: center;
+  background: #1a202c;
+
+  .ctaTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+
+  .ctaText {
+    font-size: 1.2rem;
+    color: $white-alpha-8;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ctaButton {
+    @include button-base(1.2rem 2.5rem);
+    background: $crypto-blue;
+    color: white;
+    font-size: 1.2rem;
+    box-shadow: 0 8px 25px rgba(0, 210, 255, 0.4);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 210, 255, 0.5);
+    }
+  }
+}
+
+// Footer
+.footer {
+  background: #0d1117;
+  padding: 2rem;
+  text-align: center;
+
+  .footerText {
+    color: $white-alpha-6;
+    margin: 0;
+  }
+} 

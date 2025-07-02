@@ -58,11 +58,11 @@
 - [ ] Créer contexte Web3 global
 
 **Pages principales**
-- [ ] Créer `components/Header.js` avec connexion wallet
+- [ ] Créer `components/Header.ts` avec connexion wallet
 - [ ] Créer `pages/Home.js` - Page d'accueil
-- [ ] Créer `pages/Institutions.js` - Dashboard établissements
-- [ ] Créer `pages/Companies.js` - Dashboard entreprises
-- [ ] Créer `pages/Students.js` - Dashboard étudiants
+- [ ] Créer `pages/Dashboard/Institutions/page.ts` - Dashboard établissements
+- [ ] Créer `pages/Dashboard/Companies/page.ts` - Dashboard entreprises
+- [ ] Créer `pages/Dashboard/Students/page.ts` - Dashboard étudiants
 
 **Formulaires de base**
 - [ ] `components/RegisterInstitution.js`
