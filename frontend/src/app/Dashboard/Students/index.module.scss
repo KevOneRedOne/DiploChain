@@ -418,3 +418,273 @@ $border-color: #e2e8f0;
     }
   }
 }
+
+// Nouveaux styles pour les fonctionnalités blockchain
+.loading, .noWallet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(102, 126, 234, 0.3);
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    color: $primary-color;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: $text-muted;
+    font-size: 1.1rem;
+  }
+}
+
+// Section Profil
+.profileSection {
+  .profileCard {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    .profileInfo {
+      display: grid;
+      gap: 1rem;
+
+      .profileField {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid $bg-light;
+
+        .fieldLabel {
+          font-weight: 600;
+          color: $text-muted;
+        }
+
+        .fieldValue {
+          color: $primary-color;
+          font-weight: 500;
+          word-break: break-all;
+        }
+      }
+    }
+
+    .noProfile {
+      text-align: center;
+      padding: 2rem;
+      color: $text-muted;
+
+      p {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
+
+// Métadonnées et liens
+.metadataInfo {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: $bg-light;
+  border-radius: 8px;
+  font-size: 0.875rem;
+
+  .metadataLabel {
+    color: $text-muted;
+    font-weight: 500;
+  }
+
+  .metadataLink {
+    color: $primary-color;
+    text-decoration: none;
+    margin-left: 0.5rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.noDiplomas {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+  h4 {
+    color: $primary-color;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: $text-muted;
+    margin-bottom: 0.5rem;
+  }
+}
+
+// Section Détails
+.detailsSection {
+  .diplomaDetails {
+    .detailsContent {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .detailsCard {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+      h4 {
+        color: $primary-color;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .detailGrid {
+        display: grid;
+        gap: 0.75rem;
+
+        .detailItem {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          padding: 0.5rem 0;
+          border-bottom: 1px solid $bg-light;
+
+          .detailLabel {
+            font-weight: 600;
+            color: $text-muted;
+            min-width: 120px;
+          }
+
+          .detailValue {
+            color: $primary-color;
+            font-weight: 500;
+            text-align: right;
+            word-break: break-all;
+            flex: 1;
+          }
+        }
+      }
+    }
+
+    .tokenUri {
+      .detailLabel {
+        font-weight: 600;
+        color: $text-muted;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .uriLink {
+        color: $primary-color;
+        text-decoration: none;
+        word-break: break-all;
+        display: block;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .transferCard {
+      background: linear-gradient(135deg, #fff7e6 0%, #fff3d9 100%);
+      border: 2px solid #ffd700;
+
+      .transferForm {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+
+        .transferInput {
+          flex: 1;
+          padding: 0.75rem;
+          border: 2px solid $bg-light;
+          border-radius: 10px;
+          font-size: 0.9rem;
+
+          &:focus {
+            outline: none;
+            border-color: $primary-color;
+          }
+        }
+
+        .transferButton {
+          @include button-base;
+          background: $primary-color;
+          color: white;
+          padding: 0.75rem 1.5rem;
+          white-space: nowrap;
+
+          &:hover {
+            background: darken($primary-color, 10%);
+            transform: translateY(-1px);
+          }
+        }
+      }
+
+      .transferWarning {
+        color: #d68910;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin: 0;
+      }
+    }
+
+    .loadingDetails {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem;
+      text-align: center;
+
+      .spinner {
+        width: 30px;
+        height: 30px;
+        border: 3px solid rgba(102, 126, 234, 0.3);
+        border-top: 3px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        color: $text-muted;
+      }
+    }
+  }
+
+  .noSelection {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    p {
+      color: $text-muted;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
