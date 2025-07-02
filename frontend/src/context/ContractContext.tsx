@@ -20,19 +20,16 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const { provider, signer, chainId, isConnected } = useWeb3();
 
-  // État des contrats
   const [diplomaNFTContract, setDiplomaNFTContract] = useState<any>(null);
   const [diplomaTokenContract, setDiplomaTokenContract] = useState<any>(null);
   const [isContractsLoaded, setIsContractsLoaded] = useState(false);
 
-  // États des transactions
   const [isTransactionPending, setIsTransactionPending] = useState(false);
   const [lastTransactionHash, setLastTransactionHash] = useState<string | null>(
     null
   );
   const [error, setError] = useState<string | null>(null);
 
-  // Initialiser les contrats quand le provider change
   useEffect(() => {
     const initializeContracts = async () => {
       if (!provider || !chainId || !isConnected) {
@@ -43,14 +40,12 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       try {
         const contracts = getContractsForNetwork(chainId);
 
-        // Vérifier que les adresses sont définies
         if (!contracts.diplomaNFT.address || !contracts.diplomaToken.address) {
           console.warn('Adresses des contrats non définies pour ce réseau');
           setIsContractsLoaded(false);
           return;
         }
 
-        // Créer les instances des contrats
         const nftContract = new ethers.Contract(
           contracts.diplomaNFT.address,
           contracts.diplomaNFT.abi,
@@ -79,7 +74,6 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     initializeContracts();
   }, [provider, chainId, isConnected]);
 
-  // Fonction pour minter un diplôme
   const mintDiploma = async (
     to: string,
     studentName: string,
@@ -122,7 +116,6 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  // Fonction pour obtenir les détails d'un diplôme
   const getDiplomaDetails = async (
     tokenId: number
   ): Promise<DiplomaMeta | null> => {
@@ -145,7 +138,6 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  // Fonction pour obtenir les diplômes d'un utilisateur
   const getUserDiplomas = async (address: string): Promise<DiplomaToken[]> => {
     if (!diplomaNFTContract) {
       throw new Error('Contrat non initialisé');
@@ -155,7 +147,6 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       const balance = await diplomaNFTContract.balanceOf(address);
       const diplomas: DiplomaToken[] = [];
 
-      // Récupérer tous les événements DiplomaMinted pour cet utilisateur
       const filter = diplomaNFTContract.filters.DiplomaMinted(address);
       const events = await diplomaNFTContract.queryFilter(filter);
 
@@ -188,7 +179,6 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  // Fonction pour acheter des tokens
   const buyTokens = async () => {
     if (!diplomaTokenContract || !signer) {
       throw new Error('Contrat non initialisé ou signer manquant');
@@ -200,7 +190,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const contractWithSigner = diplomaTokenContract.connect(signer);
       const tx = await contractWithSigner.buyTokens({
-        value: ethers.parseEther('0.01'), // 0.01 ETH comme défini dans le contrat
+        value: ethers.parseEther('0.01'),
       });
 
       setLastTransactionHash(tx.hash);
@@ -219,7 +209,6 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  // Fonction pour obtenir le solde de tokens
   const getTokenBalance = async (address: string): Promise<TokenBalance> => {
     if (!diplomaTokenContract) {
       throw new Error('Contrat non initialisé');
@@ -247,7 +236,6 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  // Fonction pour payer la vérification
   const payForVerification = async (diplomaDAppAddress: string) => {
     if (!diplomaTokenContract || !signer) {
       throw new Error('Contrat non initialisé ou signer manquant');
@@ -277,7 +265,6 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  // Fonction pour ajouter une école accréditée (seul le propriétaire peut faire cela)
   const addAccreditedSchool = async (schoolAddress: string) => {
     if (!diplomaNFTContract || !signer) {
       throw new Error('Contrat non initialisé ou signer manquant');
@@ -306,7 +293,6 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  // Fonction pour vérifier si une école est accréditée
   const isSchoolAccredited = async (
     schoolAddress: string
   ): Promise<boolean> => {
@@ -322,7 +308,6 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  // Fonction pour récompenser une entreprise pour l'évaluation (seul le propriétaire peut faire cela)
   const rewardCompanyForEvaluation = async (companyAddress: string) => {
     if (!diplomaTokenContract || !signer) {
       throw new Error('Contrat non initialisé ou signer manquant');
@@ -352,25 +337,21 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const value: ContractContextType = {
-    // État des contrats
     diplomaNFTContract,
     diplomaTokenContract,
     isContractsLoaded,
 
-    // Fonctions NFT
     mintDiploma,
     getDiplomaDetails,
     getUserDiplomas,
     addAccreditedSchool,
     isSchoolAccredited,
 
-    // Fonctions Token
     buyTokens,
     getTokenBalance,
     payForVerification,
     rewardCompanyForEvaluation,
 
-    // États
     isTransactionPending,
     lastTransactionHash,
     error,

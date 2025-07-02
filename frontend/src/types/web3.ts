@@ -56,12 +56,10 @@ export interface TokenBalance {
 }
 
 export interface ContractContextType {
-  // État des contrats
   diplomaNFTContract: any;
   diplomaTokenContract: any;
   isContractsLoaded: boolean;
 
-  // Fonctions NFT
   mintDiploma: (
     to: string,
     studentName: string,
@@ -75,13 +73,11 @@ export interface ContractContextType {
   addAccreditedSchool: (schoolAddress: string) => Promise<any>;
   isSchoolAccredited: (schoolAddress: string) => Promise<boolean>;
 
-  // Fonctions Token
   buyTokens: () => Promise<any>;
   getTokenBalance: (address: string) => Promise<TokenBalance>;
   payForVerification: (diplomaDAppAddress: string) => Promise<any>;
   rewardCompanyForEvaluation: (companyAddress: string) => Promise<any>;
 
-  // États
   isTransactionPending: boolean;
   lastTransactionHash: string | null;
   error: string | null;

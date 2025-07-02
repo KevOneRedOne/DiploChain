@@ -19,14 +19,12 @@ export const useMetaMask = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Vérifier si MetaMask est installé
   const isMetaMaskInstalled = useCallback(() => {
     return (
       typeof window !== 'undefined' && typeof window.ethereum !== 'undefined'
     );
   }, []);
 
-  // Connecter le wallet
   const connectWallet = useCallback(async () => {
     if (!isMetaMaskInstalled()) {
       setError(
@@ -39,7 +37,6 @@ export const useMetaMask = () => {
     setError(null);
 
     try {
-      // Demander l'autorisation de connexion
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts',
       });
@@ -48,7 +45,6 @@ export const useMetaMask = () => {
         throw new Error('Aucun compte MetaMask trouvé');
       }
 
-      // Créer le provider et signer
       const web3Provider = new ethers.BrowserProvider(window.ethereum);
       const web3Signer = await web3Provider.getSigner();
       const network = await web3Provider.getNetwork();
@@ -59,7 +55,6 @@ export const useMetaMask = () => {
       setChainId(Number(network.chainId));
       setIsConnected(true);
 
-      // Sauvegarder l'état de connexion
       localStorage.setItem('isWalletConnected', 'true');
     } catch (err: any) {
       console.error('Erreur de connexion:', err);
@@ -73,7 +68,6 @@ export const useMetaMask = () => {
     }
   }, [isMetaMaskInstalled]);
 
-  // Déconnecter le wallet
   const disconnectWallet = useCallback(() => {
     setAccount(null);
     setProvider(null);
@@ -84,7 +78,6 @@ export const useMetaMask = () => {
     localStorage.removeItem('isWalletConnected');
   }, []);
 
-  // Changer de réseau
   const switchNetwork = useCallback(async (targetChainId: string) => {
     if (!window.ethereum) return;
 
@@ -94,7 +87,6 @@ export const useMetaMask = () => {
         params: [{ chainId: targetChainId }],
       });
     } catch (error: any) {
-      // Si le réseau n'existe pas, l'ajouter
       if (error.code === 4902) {
         const networkConfig = Object.values(NETWORKS).find(
           network => network.chainId === targetChainId
@@ -118,7 +110,6 @@ export const useMetaMask = () => {
     }
   }, []);
 
-  // Écouter les changements de compte
   const handleAccountsChanged = useCallback(
     (accounts: string[]) => {
       if (accounts.length === 0) {
@@ -130,16 +121,13 @@ export const useMetaMask = () => {
     [account, disconnectWallet]
   );
 
-  // Écouter les changements de réseau
   const handleChainChanged = useCallback((chainId: string) => {
     const newChainId = parseInt(chainId, 16);
     setChainId(newChainId);
 
-    // Recharger la page pour éviter les problèmes de cache
     window.location.reload();
   }, []);
 
-  // Configuration des event listeners
   useEffect(() => {
     if (!isMetaMaskInstalled()) return;
 
@@ -157,7 +145,6 @@ export const useMetaMask = () => {
     };
   }, [handleAccountsChanged, handleChainChanged, isMetaMaskInstalled]);
 
-  // Reconnexion automatique si précédemment connecté
   useEffect(() => {
     const autoConnect = async () => {
       const wasConnected = localStorage.getItem('isWalletConnected');

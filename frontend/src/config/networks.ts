@@ -1,9 +1,8 @@
 import { NetworkConfig } from '../types/web3';
 
 export const NETWORKS: Record<string, NetworkConfig> = {
-  // Blaze testnet (Sonic Labs) - Réseau principal pour ce projet
   blaze: {
-    chainId: '0xDEDE', // 57054 en hexadécimal
+    chainId: '0xDEDE',
     chainName: 'Blaze Testnet',
     nativeCurrency: {
       name: 'Sonic',
@@ -13,9 +12,8 @@ export const NETWORKS: Record<string, NetworkConfig> = {
     rpcUrls: ['https://rpc.blaze.soniclabs.com'],
     blockExplorerUrls: ['https://testnet.sonicscan.org'],
   },
-  // Hardhat local network
   hardhat: {
-    chainId: '0x7A69', // 31337 en hexadécimal
+    chainId: '0x7A69',
     chainName: 'Hardhat Local',
     nativeCurrency: {
       name: 'Ethereum',
@@ -25,9 +23,8 @@ export const NETWORKS: Record<string, NetworkConfig> = {
     rpcUrls: ['http://127.0.0.1:8545'],
     blockExplorerUrls: [''],
   },
-  // Sonic testnet
   sonic: {
-    chainId: '0xFAC5', // 64165 en hexadécimal
+    chainId: '0xFAC5',
     chainName: 'Sonic Testnet',
     nativeCurrency: {
       name: 'Sonic',
@@ -37,9 +34,8 @@ export const NETWORKS: Record<string, NetworkConfig> = {
     rpcUrls: ['https://rpc.testnet.soniclabs.com'],
     blockExplorerUrls: ['https://testnet.sonicscan.org'],
   },
-  // Sepolia testnet
   sepolia: {
-    chainId: '0xAA36A7', // 11155111 en hexadécimal
+    chainId: '0xAA36A7',
     chainName: 'Sepolia Test Network',
     nativeCurrency: {
       name: 'Ethereum',
@@ -49,9 +45,8 @@ export const NETWORKS: Record<string, NetworkConfig> = {
     rpcUrls: ['https://sepolia.infura.io/v3/YOUR_INFURA_KEY'],
     blockExplorerUrls: ['https://sepolia.etherscan.io'],
   },
-  // Goerli testnet (backup)
   goerli: {
-    chainId: '0x5', // 5 en hexadécimal
+    chainId: '0x5',
     chainName: 'Goerli Test Network',
     nativeCurrency: {
       name: 'Ethereum',
@@ -65,7 +60,6 @@ export const NETWORKS: Record<string, NetworkConfig> = {
 
 export const DEFAULT_NETWORK = 'blaze';
 
-// Liste des Chain IDs supportés (incluant les variantes Sonic Labs)
 export const SUPPORTED_CHAIN_IDS = [
   '0xDEDE', // 57054 - Blaze testnet (réseau principal)
   '0x7A69', // 31337 - Hardhat
@@ -74,7 +68,6 @@ export const SUPPORTED_CHAIN_IDS = [
   '0x5', // 5 - Goerli
 ];
 
-// Liste des Chain IDs supportés en format numérique (plus fiable)
 export const SUPPORTED_CHAIN_IDS_NUMERIC = [
   57054, // Blaze testnet
   31337, // Hardhat
@@ -83,7 +76,6 @@ export const SUPPORTED_CHAIN_IDS_NUMERIC = [
   5, // Goerli
 ];
 
-// Fonction pour vérifier si un Chain ID est supporté
 export const isSupportedChainId = (chainId: number): boolean => {
   const hexChainId = `0x${chainId.toString(16).toUpperCase()}`;
   console.log(
@@ -91,7 +83,6 @@ export const isSupportedChainId = (chainId: number): boolean => {
   );
   console.log(`SUPPORTED_CHAIN_IDS:`, SUPPORTED_CHAIN_IDS);
 
-  // Debug chaque comparaison
   SUPPORTED_CHAIN_IDS.forEach((id, index) => {
     const upperCaseId = id.toUpperCase();
     const match = upperCaseId === hexChainId;
@@ -108,7 +99,6 @@ export const isSupportedChainId = (chainId: number): boolean => {
   return isSupported;
 };
 
-// Fonction alternative plus robuste pour vérifier si un Chain ID est supporté
 export const isSupportedChainIdNumeric = (chainId: number): boolean => {
   console.log(`🔍 isSupportedChainIdNumeric: chainId=${chainId}`);
   const isSupported = SUPPORTED_CHAIN_IDS_NUMERIC.includes(chainId);
@@ -116,7 +106,6 @@ export const isSupportedChainIdNumeric = (chainId: number): boolean => {
   return isSupported;
 };
 
-// Liste des réseaux issus de la configuration
 export const NETWORK_CHAIN_IDS = Object.values(NETWORKS).map(
   network => network.chainId
 );

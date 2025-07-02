@@ -1,6 +1,5 @@
 import { DiplomaContract } from '../types/web3';
 
-// ABI pour le contrat MockNFTDiploma
 export const DIPLOMA_NFT_ABI = [
   'function nextTokenId() view returns (uint256)',
   'function accreditedSchools(address) view returns (bool)',
@@ -16,7 +15,6 @@ export const DIPLOMA_NFT_ABI = [
   'event DiplomaMinted(address indexed to, uint256 indexed tokenId, string studentName)',
 ];
 
-// ABI pour le contrat DiplomaToken
 export const DIPLOMA_TOKEN_ABI = [
   'function INITIAL_SUPPLY() view returns (uint256)',
   'function name() view returns (string)',
@@ -36,7 +34,6 @@ export const DIPLOMA_TOKEN_ABI = [
   'event Approval(address indexed owner, address indexed spender, uint256 value)',
 ];
 
-// Configuration des contrats par réseau
 export const CONTRACTS: Record<
   string,
   {
@@ -101,13 +98,11 @@ export const CONTRACTS: Record<
   },
 };
 
-// Fonction helper pour obtenir les contrats du réseau actuel
 export const getContractsForNetwork = (chainId: number) => {
   const networkKey = getNetworkKey(chainId);
   return CONTRACTS[networkKey] || CONTRACTS.blaze;
 };
 
-// Fonction helper pour convertir chainId en clé de réseau
 const getNetworkKey = (chainId: number): string => {
   console.log('Getting network key for chainId:', chainId);
 
@@ -118,14 +113,13 @@ const getNetworkKey = (chainId: number): string => {
       return 'sepolia';
     case 5:
       return 'goerli';
-    case 64165: // Sonic testnet
+    case 64165:
       return 'sonic';
-    case 57054: // Blaze testnet
+    case 57054:
       return 'blaze';
-    // Sonic Labs networks (tous utilisent les mêmes contrats)
-    case 146: // Sonic mainnet (potential)
-    case 64240: // Sonic devnet (potential)
-      return 'blaze'; // Utilise la config Blaze par défaut
+    case 146:
+    case 64240:
+      return 'blaze';
     default:
       console.warn('Unknown chainId, defaulting to blaze:', chainId);
       return 'blaze';

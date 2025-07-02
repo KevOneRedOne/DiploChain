@@ -31,7 +31,6 @@ export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
   );
 };
 
-// Hook pour utiliser le contexte Web3
 export const useWeb3 = (): Web3ContextType => {
   const context = useContext(Web3Context);
 
@@ -42,7 +41,6 @@ export const useWeb3 = (): Web3ContextType => {
   return context;
 };
 
-// Hook pour vérifier si MetaMask est installée
 export const useMetaMaskInstalled = (): boolean => {
   const { isConnected } = useWeb3();
   return (
