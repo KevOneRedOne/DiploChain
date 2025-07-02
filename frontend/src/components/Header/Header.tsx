@@ -88,41 +88,35 @@ export default function Header({ className = '' }: HeaderProps) {
         <nav className={styles.nav}>
           <a href="/" className={styles.navLink}>Accueil</a>
           <a href="/Dashboard/Students" className={styles.navLink}>Étudiants</a>
-          <a href="/Dashboard/Institutions" className={styles.navLink}>Établissements</a>
-          <a href="/Dashboard/Companies" className={styles.navLink}>Entreprises</a>
-        </nav>
-
-        <div className={styles.walletSection}>
+          
+          {/* Bouton MetaMask intégré dans la navbar */}
           {account ? (
-            <div className={styles.walletConnected}>
-              <div className={styles.balanceDisplay}>
-                <span className={styles.balanceLabel}>Balance:</span>
-                <span className={styles.balanceAmount}>{parseFloat(balance).toFixed(4)} ETH</span>
-              </div>
-              <div className={styles.accountInfo}>
-                <span className={styles.accountAddress}>{formatAddress(account)}</span>
-                <button onClick={disconnectWallet} className={styles.disconnectBtn}>
-                  Déconnecter
-                </button>
-              </div>
+            <div className={styles.walletConnectedNav}>
+              <span className={styles.accountAddressNav}>{formatAddress(account)}</span>
+              <button onClick={disconnectWallet} className={styles.disconnectBtnNav}>
+                Déconnecter
+              </button>
             </div>
           ) : (
             <button 
               onClick={connectWallet} 
               disabled={isConnecting}
-              className={styles.connectBtn}
+              className={styles.connectBtnNav}
             >
               {isConnecting ? (
-                <span className={styles.loading}>
-                  <span className={styles.spinner}></span>
+                <span className={styles.loadingNav}>
+                  <span className={styles.spinnerNav}></span>
                   Connexion...
                 </span>
               ) : (
-                'Connecter Wallet'
+                '🦊 Connecter MetaMask'
               )}
             </button>
           )}
-        </div>
+          
+          <a href="/Dashboard/Institutions" className={styles.navLink}>Établissements</a>
+          <a href="/Dashboard/Companies" className={styles.navLink}>Entreprises</a>
+        </nav>
       </div>
     </header>
   );

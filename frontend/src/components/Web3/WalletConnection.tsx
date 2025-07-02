@@ -63,8 +63,6 @@ const WalletConnection: React.FC = () => {
 
       {!isConnected ? (
         <div className="connect-section">
-          <h3>🔗 Connexion à MetaMask</h3>
-          <p>Connectez votre wallet pour accéder à DiploChain</p>
           <button
             onClick={connectWallet}
             disabled={isLoading}
@@ -123,9 +121,7 @@ const WalletConnection: React.FC = () => {
       <style jsx>{`
         .wallet-connection {
           padding: 1rem;
-          border: 1px solid #ddd;
           border-radius: 8px;
-          background: #f9f9f9;
         }
 
         .alert {
@@ -149,12 +145,20 @@ const WalletConnection: React.FC = () => {
         .connect-section,
         .connected-section {
           text-align: center;
+          color: #000000;
+        }
+        
+        .connect-section h3,
+        .connect-section p,
+        .connected-section h3,
+        .connected-section p {
+          color: #000000 !important;
         }
 
         .btn {
           padding: 0.5rem 1rem;
           border: none;
-          border-radius: 4px;
+          border-radius: 40px;
           cursor: pointer;
           text-decoration: none;
           display: inline-block;
@@ -178,13 +182,13 @@ const WalletConnection: React.FC = () => {
 
         .btn-warning {
           background-color: #ffc107;
-          color: #212529;
+          color: #000000 !important;
         }
 
         .btn-outline-secondary {
           background-color: transparent;
-          border: 1px solid #6c757d;
-          color: #6c757d;
+          border: 1px solid #000000;
+          color: #000000 !important;
         }
 
         .btn-sm {
@@ -213,12 +217,13 @@ const WalletConnection: React.FC = () => {
 
         .label {
           font-weight: 600;
-          color: #666;
+          color: #000000 !important;
         }
 
         .address {
           font-family: monospace;
           font-weight: 500;
+          color: #000000 !important;
         }
 
         .network.connected {

@@ -81,6 +81,87 @@ $crypto-shadow-hover: 0 6px 20px rgba(0, 210, 255, 0.4);
       transform: translateY(-1px);
     }
   }
+
+  // Styles pour le bouton MetaMask dans la navbar
+  .connectBtnNav {
+    background: #ffffff !important;
+    color: #1a202c !important;
+    border: 2px solid #00d2ff !important;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    white-space: nowrap;
+
+    * {
+      color: #1a202c !important;
+    }
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      background: #f8f9fa !important;
+      box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+
+  .walletConnectedNav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    .accountAddressNav {
+      color: white;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      border: 1px solid $white-alpha-2;
+    }
+
+    .disconnectBtnNav {
+      background: $red-alpha-2;
+      color: white;
+      border: 1px solid $red-alpha-3;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: $red-alpha-3;
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  .loadingNav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #1a202c !important;
+
+    * {
+      color: #1a202c !important;
+    }
+
+    .spinnerNav {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(26, 32, 44, 0.3);
+      border-top: 2px solid #1a202c;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
 }
 
 .walletSection {
@@ -152,25 +233,41 @@ $crypto-shadow-hover: 0 6px 20px rgba(0, 210, 255, 0.4);
 }
 
 .connectBtn {
-  background: $crypto-blue;
-  color: white;
-  border: none;
+  background: #ffffff !important;
+  color: #1a202c !important;
+  border: 2px solid #00d2ff !important;
   padding: 0.75rem 1.5rem;
   border-radius: 25px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: $crypto-shadow;
+  box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+  text-shadow: none !important;
+
+  * {
+    color: #1a202c !important;
+  }
 
   &:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: $crypto-shadow-hover;
+    box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
+    background: #f8f9fa !important;
+    color: #1a202c !important;
+    
+    * {
+      color: #1a202c !important;
+    }
   }
 
   &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
     transform: none;
+    color: #6c757d !important;
+    
+    * {
+      color: #6c757d !important;
+    }
   }
 }
 
@@ -178,12 +275,18 @@ $crypto-shadow-hover: 0 6px 20px rgba(0, 210, 255, 0.4);
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: #1a202c !important;
+  text-shadow: none !important;
+
+  * {
+    color: #1a202c !important;
+  }
 
   .spinner {
     width: 16px;
     height: 16px;
-    border: 2px solid $white-alpha-3;
-    border-top: 2px solid white;
+    border: 2px solid rgba(26, 32, 44, 0.3);
+    border-top: 2px solid #1a202c;
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
