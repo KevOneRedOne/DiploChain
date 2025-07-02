@@ -11,21 +11,25 @@ import {
   TokenBalance,
 } from '../types/web3';
 
-const ContractContext = createContext<ContractContextType | undefined>(undefined);
+const ContractContext = createContext<ContractContextType | undefined>(
+  undefined
+);
 
 export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const { provider, signer, chainId, isConnected } = useWeb3();
-  
+
   // État des contrats
   const [diplomaNFTContract, setDiplomaNFTContract] = useState<any>(null);
   const [diplomaTokenContract, setDiplomaTokenContract] = useState<any>(null);
   const [isContractsLoaded, setIsContractsLoaded] = useState(false);
-  
+
   // États des transactions
   const [isTransactionPending, setIsTransactionPending] = useState(false);
-  const [lastTransactionHash, setLastTransactionHash] = useState<string | null>(null);
+  const [lastTransactionHash, setLastTransactionHash] = useState<string | null>(
+    null
+  );
   const [error, setError] = useState<string | null>(null);
 
   // Initialiser les contrats quand le provider change
@@ -38,7 +42,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
 
       try {
         const contracts = getContractsForNetwork(chainId);
-        
+
         // Vérifier que les adresses sont définies
         if (!contracts.diplomaNFT.address || !contracts.diplomaToken.address) {
           console.warn('Adresses des contrats non définies pour ce réseau');
@@ -63,11 +67,11 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         setDiplomaTokenContract(tokenContract);
         setIsContractsLoaded(true);
         setError(null);
-        
+
         console.log('Contrats initialisés avec succès');
       } catch (err) {
-        console.error('Erreur lors de l\'initialisation des contrats:', err);
-        setError('Impossible d\'initialiser les contrats');
+        console.error("Erreur lors de l'initialisation des contrats:", err);
+        setError("Impossible d'initialiser les contrats");
         setIsContractsLoaded(false);
       }
     };
@@ -119,7 +123,9 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   // Fonction pour obtenir les détails d'un diplôme
-  const getDiplomaDetails = async (tokenId: number): Promise<DiplomaMeta | null> => {
+  const getDiplomaDetails = async (
+    tokenId: number
+  ): Promise<DiplomaMeta | null> => {
     if (!diplomaNFTContract) {
       throw new Error('Contrat non initialisé');
     }
@@ -149,10 +155,32 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       const balance = await diplomaNFTContract.balanceOf(address);
       const diplomas: DiplomaToken[] = [];
 
-      // Cette implémentation basique nécessiterait un événement ou une fonction pour lister les tokens
-      // Pour l'instant, on retourne un tableau vide
-      console.log(`L'utilisateur ${address} possède ${balance} diplômes`);
+      // Récupérer tous les événements DiplomaMinted pour cet utilisateur
+      const filter = diplomaNFTContract.filters.DiplomaMinted(address);
+      const events = await diplomaNFTContract.queryFilter(filter);
 
+      for (const event of events) {
+        const tokenId = event.args?.tokenId;
+        if (tokenId) {
+          try {
+            const details = await getDiplomaDetails(Number(tokenId));
+            const tokenURI = await diplomaNFTContract.tokenURI(tokenId);
+
+            if (details) {
+              diplomas.push({
+                id: Number(tokenId),
+                owner: address,
+                metadata: details,
+                tokenURI,
+              });
+            }
+          } catch (err) {
+            console.error(`Erreur pour le token ${tokenId}:`, err);
+          }
+        }
+      }
+
+      console.log(`L'utilisateur ${address} possède ${balance} diplômes`);
       return diplomas;
     } catch (err) {
       console.error('Erreur lors de la récupération des diplômes:', err);
@@ -176,14 +204,14 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       });
 
       setLastTransactionHash(tx.hash);
-      console.log('Transaction d\'achat soumise:', tx.hash);
+      console.log("Transaction d'achat soumise:", tx.hash);
 
       const receipt = await tx.wait();
       console.log('Achat confirmé:', receipt);
 
       return receipt;
     } catch (err: any) {
-      console.error('Erreur lors de l\'achat:', err);
+      console.error("Erreur lors de l'achat:", err);
       setError(`Erreur lors de l'achat: ${err.message}`);
       throw err;
     } finally {
@@ -230,7 +258,8 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
 
     try {
       const contractWithSigner = diplomaTokenContract.connect(signer);
-      const tx = await contractWithSigner.payForVerification(diplomaDAppAddress);
+      const tx =
+        await contractWithSigner.payForVerification(diplomaDAppAddress);
 
       setLastTransactionHash(tx.hash);
       console.log('Transaction de paiement soumise:', tx.hash);
@@ -248,22 +277,99 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  // Fonction pour ajouter une école accréditée (seul le propriétaire peut faire cela)
+  const addAccreditedSchool = async (schoolAddress: string) => {
+    if (!diplomaNFTContract || !signer) {
+      throw new Error('Contrat non initialisé ou signer manquant');
+    }
+
+    setIsTransactionPending(true);
+    setError(null);
+
+    try {
+      const contractWithSigner = diplomaNFTContract.connect(signer);
+      const tx = await contractWithSigner.addSchool(schoolAddress);
+
+      setLastTransactionHash(tx.hash);
+      console.log("Transaction d'ajout d'école soumise:", tx.hash);
+
+      const receipt = await tx.wait();
+      console.log('École ajoutée:', receipt);
+
+      return receipt;
+    } catch (err: any) {
+      console.error("Erreur lors de l'ajout de l'école:", err);
+      setError(`Erreur lors de l'ajout de l'école: ${err.message}`);
+      throw err;
+    } finally {
+      setIsTransactionPending(false);
+    }
+  };
+
+  // Fonction pour vérifier si une école est accréditée
+  const isSchoolAccredited = async (
+    schoolAddress: string
+  ): Promise<boolean> => {
+    if (!diplomaNFTContract) {
+      throw new Error('Contrat non initialisé');
+    }
+
+    try {
+      return await diplomaNFTContract.accreditedSchools(schoolAddress);
+    } catch (err) {
+      console.error("Erreur lors de la vérification de l'accréditation:", err);
+      return false;
+    }
+  };
+
+  // Fonction pour récompenser une entreprise pour l'évaluation (seul le propriétaire peut faire cela)
+  const rewardCompanyForEvaluation = async (companyAddress: string) => {
+    if (!diplomaTokenContract || !signer) {
+      throw new Error('Contrat non initialisé ou signer manquant');
+    }
+
+    setIsTransactionPending(true);
+    setError(null);
+
+    try {
+      const contractWithSigner = diplomaTokenContract.connect(signer);
+      const tx = await contractWithSigner.rewardForEvaluation(companyAddress);
+
+      setLastTransactionHash(tx.hash);
+      console.log('Transaction de récompense soumise:', tx.hash);
+
+      const receipt = await tx.wait();
+      console.log('Récompense accordée:', receipt);
+
+      return receipt;
+    } catch (err: any) {
+      console.error("Erreur lors de l'attribution de la récompense:", err);
+      setError(`Erreur lors de l'attribution de la récompense: ${err.message}`);
+      throw err;
+    } finally {
+      setIsTransactionPending(false);
+    }
+  };
+
   const value: ContractContextType = {
     // État des contrats
     diplomaNFTContract,
     diplomaTokenContract,
     isContractsLoaded,
-    
+
     // Fonctions NFT
     mintDiploma,
     getDiplomaDetails,
     getUserDiplomas,
-    
+    addAccreditedSchool,
+    isSchoolAccredited,
+
     // Fonctions Token
     buyTokens,
     getTokenBalance,
     payForVerification,
-    
+    rewardCompanyForEvaluation,
+
     // États
     isTransactionPending,
     lastTransactionHash,
@@ -283,4 +389,4 @@ export const useContracts = (): ContractContextType => {
     throw new Error('useContracts doit être utilisé dans un ContractProvider');
   }
   return context;
-}; 
+};

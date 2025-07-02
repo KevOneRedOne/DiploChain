@@ -29,9 +29,7 @@ export default function RootLayout({
     <html lang="fr">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Web3Provider>
-          <ContractProvider>
-            {children}
-          </ContractProvider>
+          <ContractProvider>{children}</ContractProvider>
         </Web3Provider>
       </body>
     </html>

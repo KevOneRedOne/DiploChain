@@ -10,15 +10,17 @@ const TokenManager: React.FC = () => {
     buyTokens,
     getTokenBalance,
     payForVerification,
+    rewardCompanyForEvaluation,
     isTransactionPending,
     error,
     lastTransactionHash,
   } = useContracts();
-  
+
   const { account, isConnected } = useWeb3();
 
   const [tokenBalance, setTokenBalance] = useState<TokenBalance | null>(null);
   const [verificationAddress, setVerificationAddress] = useState('');
+  const [companyAddress, setCompanyAddress] = useState('');
   const [isLoadingBalance, setIsLoadingBalance] = useState(false);
 
   // Charger le solde de tokens
@@ -43,14 +45,14 @@ const TokenManager: React.FC = () => {
       // Recharger le solde après l'achat
       setTimeout(loadTokenBalance, 2000);
     } catch (err) {
-      console.error('Erreur lors de l\'achat:', err);
+      console.error("Erreur lors de l'achat:", err);
     }
   };
 
   // Payer pour la vérification
   const handlePayForVerification = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!verificationAddress.trim()) {
       alert('Veuillez entrer une adresse valide');
       return;
@@ -63,6 +65,25 @@ const TokenManager: React.FC = () => {
       setTimeout(loadTokenBalance, 2000);
     } catch (err) {
       console.error('Erreur lors du paiement:', err);
+    }
+  };
+
+  // Récompenser une entreprise pour l'évaluation
+  const handleRewardCompany = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!companyAddress.trim()) {
+      alert("Veuillez entrer une adresse d'entreprise valide");
+      return;
+    }
+
+    try {
+      await rewardCompanyForEvaluation(companyAddress);
+      setCompanyAddress('');
+      // Recharger le solde après la récompense
+      setTimeout(loadTokenBalance, 2000);
+    } catch (err) {
+      console.error("Erreur lors de l'attribution de la récompense:", err);
     }
   };
 
@@ -107,9 +128,13 @@ const TokenManager: React.FC = () => {
           ) : tokenBalance ? (
             <div className="balance-info">
               <p className="balance-amount">
-                {parseFloat(tokenBalance.balance).toFixed(2)} {tokenBalance.symbol}
+                {parseFloat(tokenBalance.balance).toFixed(2)}{' '}
+                {tokenBalance.symbol}
               </p>
-              <button onClick={loadTokenBalance} className="btn btn-sm btn-outline">
+              <button
+                onClick={loadTokenBalance}
+                className="btn btn-sm btn-outline"
+              >
                 🔄 Actualiser
               </button>
             </div>
@@ -148,17 +173,23 @@ const TokenManager: React.FC = () => {
                 type="text"
                 id="verificationAddress"
                 value={verificationAddress}
-                onChange={(e) => setVerificationAddress(e.target.value)}
+                onChange={e => setVerificationAddress(e.target.value)}
                 placeholder="0x..."
                 required
               />
             </div>
             <button
               type="submit"
-              disabled={isTransactionPending || !tokenBalance || parseFloat(tokenBalance.balance) < 10}
+              disabled={
+                isTransactionPending ||
+                !tokenBalance ||
+                parseFloat(tokenBalance.balance) < 10
+              }
               className="btn btn-secondary"
             >
-              {isTransactionPending ? 'Paiement en cours...' : 'Payer 10 DIPTOK'}
+              {isTransactionPending
+                ? 'Paiement en cours...'
+                : 'Payer 10 DIPTOK'}
             </button>
           </form>
           {tokenBalance && parseFloat(tokenBalance.balance) < 10 && (
@@ -166,6 +197,41 @@ const TokenManager: React.FC = () => {
               Solde insuffisant. Vous avez besoin d'au moins 10 DIPTOK.
             </p>
           )}
+        </div>
+      </div>
+
+      {/* Section de récompense pour les entreprises */}
+      <div className="reward-section">
+        <h3>Récompenser une Entreprise</h3>
+        <div className="reward-card">
+          <p>Récompense: 15 DIPTOK pour l'évaluation d'un étudiant</p>
+          <p className="info-text">
+            ⚠️ Fonction réservée au propriétaire du contrat
+          </p>
+          <form onSubmit={handleRewardCompany}>
+            <div className="form-group">
+              <label htmlFor="companyAddress">
+                Adresse de l'entreprise à récompenser:
+              </label>
+              <input
+                type="text"
+                id="companyAddress"
+                value={companyAddress}
+                onChange={e => setCompanyAddress(e.target.value)}
+                placeholder="0x..."
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isTransactionPending}
+              className="btn btn-success"
+            >
+              {isTransactionPending
+                ? 'Attribution en cours...'
+                : 'Attribuer 15 DIPTOK'}
+            </button>
+          </form>
         </div>
       </div>
 
@@ -216,13 +282,15 @@ const TokenManager: React.FC = () => {
 
         .balance-section,
         .buy-section,
-        .verification-section {
+        .verification-section,
+        .reward-section {
           margin-bottom: 2rem;
         }
 
         .balance-card,
         .buy-card,
-        .verification-card {
+        .verification-card,
+        .reward-card {
           background: #f8f9fa;
           padding: 1.5rem;
           border-radius: 8px;
@@ -326,8 +394,26 @@ const TokenManager: React.FC = () => {
           font-style: italic;
         }
 
+        .btn-success {
+          background-color: #28a745;
+          color: white;
+          width: 100%;
+        }
+
+        .btn-success:hover:not(:disabled) {
+          background-color: #218838;
+        }
+
+        .info-text {
+          color: #6c757d;
+          font-size: 0.9rem;
+          font-style: italic;
+          margin-bottom: 1rem;
+        }
+
         .buy-card p,
-        .verification-card p {
+        .verification-card p,
+        .reward-card p:not(.info-text) {
           margin-bottom: 1rem;
           color: #6c757d;
         }
@@ -336,4 +422,4 @@ const TokenManager: React.FC = () => {
   );
 };
 
-export default TokenManager; 
+export default TokenManager;

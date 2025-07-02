@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
-import { DEFAULT_NETWORK, NETWORKS } from '../../config/networks';
+import React, { useState, useEffect } from 'react';
+import { DEFAULT_NETWORK, NETWORKS, isSupportedChainIdNumeric } from '../../config/networks';
 import { useWeb3 } from '../../context/Web3Context';
 
 const WalletConnection: React.FC = () => {
+  const [mounted, setMounted] = useState(false);
   const {
     account,
     chainId,
@@ -16,14 +17,21 @@ const WalletConnection: React.FC = () => {
     switchNetwork,
   } = useWeb3();
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const formatAddress = (address: string): string => {
     return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
   };
 
   const getCurrentNetwork = () => {
     if (!chainId) return null;
+    const hexChainId = `0x${chainId.toString(16).toUpperCase()}`;
+    console.log('Current chainId:', chainId, 'Hex:', hexChainId);
+
     return Object.values(NETWORKS).find(
-      network => network.chainId === `0x${chainId.toString(16)}`
+      network => network.chainId.toUpperCase() === hexChainId
     );
   };
 
@@ -33,6 +41,18 @@ const WalletConnection: React.FC = () => {
     const targetNetwork = NETWORKS[DEFAULT_NETWORK];
     await switchNetwork(targetNetwork.chainId);
   };
+
+  if (!mounted) {
+    return (
+      <div className="wallet-connection">
+        <div className="connect-section">
+          <button disabled className="btn btn-primary btn-lg">
+            Chargement...
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!window?.ethereum) {
     return (
@@ -52,6 +72,9 @@ const WalletConnection: React.FC = () => {
       </div>
     );
   }
+
+  // Vérifier si le réseau actuel est supporté
+  const isNetworkSupported = chainId ? isSupportedChainIdNumeric(chainId) : false;
 
   return (
     <div className="wallet-connection">
@@ -91,15 +114,17 @@ const WalletConnection: React.FC = () => {
             <div className="network-info">
               <span className="label">Réseau:</span>
               <span
-                className={`network ${currentNetwork ? 'connected' : 'unknown'}`}
+                className={`network ${isNetworkSupported ? 'connected' : 'unknown'}`}
               >
                 {currentNetwork
                   ? currentNetwork.chainName
-                  : `Inconnu (${chainId})`}
+                  : isNetworkSupported 
+                    ? `Blaze Testnet (${chainId})`
+                    : `Non supporté (${chainId})`}
               </span>
             </div>
 
-            {currentNetwork?.chainId !== NETWORKS[DEFAULT_NETWORK].chainId && (
+            {chainId && !isNetworkSupported && (
               <button
                 onClick={handleNetworkSwitch}
                 className="btn btn-warning btn-sm"
@@ -147,7 +172,7 @@ const WalletConnection: React.FC = () => {
           text-align: center;
           color: #000000;
         }
-        
+
         .connect-section h3,
         .connect-section p,
         .connected-section h3,

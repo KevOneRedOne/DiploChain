@@ -50,11 +50,13 @@ export default function CompaniesPage() {
   return (
     <div className="companies-page">
       <Header />
-      
+
       <div className={styles.container}>
         <div className={styles.header}>
           <h1 className={styles.title}>🏢 Espace Entreprise</h1>
-          <p className={styles.subtitle}>Vérifiez les diplômes et évaluez vos candidats</p>
+          <p className={styles.subtitle}>
+            Vérifiez les diplômes et évaluez vos candidats
+          </p>
         </div>
 
         {/* Stats Cards */}
@@ -83,19 +85,19 @@ export default function CompaniesPage() {
 
         {/* Navigation Tabs */}
         <div className={styles.tabNav}>
-          <button 
+          <button
             className={`${styles.tabButton} ${activeTab === 'overview' ? styles.activeTab : ''}`}
             onClick={() => setActiveTab('overview')}
           >
             Vue d'ensemble
           </button>
-          <button 
+          <button
             className={`${styles.tabButton} ${activeTab === 'verifications' ? styles.activeTab : ''}`}
             onClick={() => setActiveTab('verifications')}
           >
             Vérifications
           </button>
-          <button 
+          <button
             className={`${styles.tabButton} ${activeTab === 'candidates' ? styles.activeTab : ''}`}
             onClick={() => setActiveTab('candidates')}
           >
@@ -108,9 +110,12 @@ export default function CompaniesPage() {
           {activeTab === 'overview' && (
             <div className={styles.overview}>
               <div className={styles.welcomeCard}>
-                <h2 className={styles.welcomeTitle}>Centre de Vérification RH 🏢</h2>
+                <h2 className={styles.welcomeTitle}>
+                  Centre de Vérification RH 🏢
+                </h2>
                 <p className={styles.welcomeText}>
-                  Vérifiez instantanément l'authenticité des diplômes et évaluez vos candidats avec la blockchain.
+                  Vérifiez instantanément l'authenticité des diplômes et évaluez
+                  vos candidats avec la blockchain.
                 </p>
                 <div className={styles.actionButtons}>
                   <button className={styles.primaryAction}>
@@ -128,15 +133,23 @@ export default function CompaniesPage() {
                   <div className={styles.activityItem}>
                     <div className={styles.activityIcon}>✅</div>
                     <div>
-                      <div className={styles.activityTitle}>Diplôme vérifié</div>
-                      <div className={styles.activityDate}>Master IA de Sophie Martin - il y a 2 heures</div>
+                      <div className={styles.activityTitle}>
+                        Diplôme vérifié
+                      </div>
+                      <div className={styles.activityDate}>
+                        Master IA de Sophie Martin - il y a 2 heures
+                      </div>
                     </div>
                   </div>
                   <div className={styles.activityItem}>
                     <div className={styles.activityIcon}>⭐</div>
                     <div>
-                      <div className={styles.activityTitle}>Candidat évalué</div>
-                      <div className={styles.activityDate}>Thomas Dubois - 4.5/5 étoiles - il y a 1 jour</div>
+                      <div className={styles.activityTitle}>
+                        Candidat évalué
+                      </div>
+                      <div className={styles.activityDate}>
+                        Thomas Dubois - 4.5/5 étoiles - il y a 1 jour
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -147,10 +160,14 @@ export default function CompaniesPage() {
           {activeTab === 'verifications' && (
             <div className={styles.verificationsSection}>
               <div className={styles.sectionHeader}>
-                <h3 className={styles.sectionTitle}>Historique des Vérifications</h3>
-                <button className={styles.addButton}>+ Nouvelle vérification</button>
+                <h3 className={styles.sectionTitle}>
+                  Historique des Vérifications
+                </h3>
+                <button className={styles.addButton}>
+                  + Nouvelle vérification
+                </button>
               </div>
-              
+
               <div className={styles.tableContainer}>
                 <table className={styles.table}>
                   <thead className={styles.tableHeader}>
@@ -165,18 +182,24 @@ export default function CompaniesPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {mockVerifications.map((verification) => (
+                    {mockVerifications.map(verification => (
                       <tr key={verification.id} className={styles.tableRow}>
                         <td className={styles.td}>{verification.candidate}</td>
                         <td className={styles.td}>{verification.diploma}</td>
-                        <td className={styles.td}>{verification.institution}</td>
                         <td className={styles.td}>
-                          <span className={styles.statusBadge}>✅ {verification.status}</span>
+                          {verification.institution}
+                        </td>
+                        <td className={styles.td}>
+                          <span className={styles.statusBadge}>
+                            ✅ {verification.status}
+                          </span>
                         </td>
                         <td className={styles.td}>{verification.date}</td>
                         <td className={styles.td}>{verification.cost}</td>
                         <td className={styles.td}>
-                          <button className={styles.actionBtn}>Voir Détails</button>
+                          <button className={styles.actionBtn}>
+                            Voir Détails
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -190,11 +213,13 @@ export default function CompaniesPage() {
             <div className={styles.candidatesSection}>
               <div className={styles.sectionHeader}>
                 <h3 className={styles.sectionTitle}>Candidats Évalués</h3>
-                <button className={styles.addButton}>+ Évaluer un candidat</button>
+                <button className={styles.addButton}>
+                  + Évaluer un candidat
+                </button>
               </div>
-              
+
               <div className={styles.candidatesGrid}>
-                {mockCandidates.map((candidate) => (
+                {mockCandidates.map(candidate => (
                   <div key={candidate.id} className={styles.candidateCard}>
                     <div className={styles.candidateHeader}>
                       <div className={styles.candidateIcon}>👤</div>
@@ -202,12 +227,18 @@ export default function CompaniesPage() {
                         <span className={styles.ratingStars}>
                           {'⭐'.repeat(Math.floor(candidate.rating))}
                         </span>
-                        <span className={styles.ratingNumber}>{candidate.rating}/5</span>
+                        <span className={styles.ratingNumber}>
+                          {candidate.rating}/5
+                        </span>
                       </div>
                     </div>
                     <h4 className={styles.candidateName}>{candidate.name}</h4>
-                    <p className={styles.candidatePosition}>{candidate.position}</p>
-                    <p className={styles.candidateDiplomas}>{candidate.diplomas} diplôme(s) vérifié(s)</p>
+                    <p className={styles.candidatePosition}>
+                      {candidate.position}
+                    </p>
+                    <p className={styles.candidateDiplomas}>
+                      {candidate.diplomas} diplôme(s) vérifié(s)
+                    </p>
                     <div className={styles.candidateActions}>
                       <button className={styles.viewButton}>Voir Profil</button>
                       <button className={styles.evaluateButton}>Évaluer</button>

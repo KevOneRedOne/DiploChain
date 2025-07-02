@@ -161,7 +161,8 @@ $border-color: #e2e8f0;
       justify-content: center;
       flex-wrap: wrap;
 
-      .primaryAction, .secondaryAction {
+      .primaryAction,
+      .secondaryAction {
         padding: 0.75rem 1.5rem;
         border-radius: 25px;
         cursor: pointer;
@@ -392,4 +393,4 @@ $border-color: #e2e8f0;
       }
     }
   }
-} 
+}

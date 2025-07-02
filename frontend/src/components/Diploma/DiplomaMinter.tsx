@@ -5,7 +5,8 @@ import { useContracts } from '../../context/ContractContext';
 import { useWeb3 } from '../../context/Web3Context';
 
 const DiplomaMinter: React.FC = () => {
-  const { mintDiploma, isTransactionPending, error, lastTransactionHash } = useContracts();
+  const { mintDiploma, isTransactionPending, error, lastTransactionHash } =
+    useContracts();
   const { account, isConnected } = useWeb3();
 
   const [formData, setFormData] = useState({
@@ -19,7 +20,9 @@ const DiplomaMinter: React.FC = () => {
 
   const [success, setSuccess] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -29,7 +32,7 @@ const DiplomaMinter: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!isConnected) {
       alert('Veuillez connecter votre wallet');
       return;
@@ -37,7 +40,7 @@ const DiplomaMinter: React.FC = () => {
 
     try {
       setSuccess(false);
-      
+
       await mintDiploma(
         formData.studentAddress,
         formData.studentName,
@@ -48,7 +51,7 @@ const DiplomaMinter: React.FC = () => {
       );
 
       setSuccess(true);
-      
+
       // Réinitialiser le formulaire
       setFormData({
         studentAddress: '',
@@ -58,7 +61,6 @@ const DiplomaMinter: React.FC = () => {
         issueDate: '',
         ipfsCID: '',
       });
-
     } catch (err) {
       console.error('Erreur lors du mint:', err);
     }
@@ -77,7 +79,7 @@ const DiplomaMinter: React.FC = () => {
   return (
     <div className="diploma-minter">
       <h2>Minter un Diplôme NFT</h2>
-      
+
       {error && (
         <div className="alert alert-error">
           <p>❌ {error}</p>
@@ -279,4 +281,4 @@ const DiplomaMinter: React.FC = () => {
   );
 };
 
-export default DiplomaMinter; 
+export default DiplomaMinter;
