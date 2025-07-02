@@ -72,6 +72,12 @@ export interface ContractContextType {
   getUserDiplomas: (address: string) => Promise<DiplomaToken[]>;
   addAccreditedSchool: (schoolAddress: string) => Promise<any>;
   isSchoolAccredited: (schoolAddress: string) => Promise<boolean>;
+  registerCompany: (
+    companyAddress: string,
+    id: number,
+    name: string,
+    country: string
+  ) => Promise<any>;
 
   buyTokens: () => Promise<any>;
   getTokenBalance: (address: string) => Promise<TokenBalance>;

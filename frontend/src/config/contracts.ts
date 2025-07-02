@@ -18,6 +18,9 @@ export const DIPLOMA_NFT_ABI = [
   'function diplomaToStudent(uint256) view returns (uint256)',
   'function diplomaToSchool(uint256) view returns (uint256)',
   'function isSchoolAccredited(address) view returns (bool)',
+  'function registerCompany(address account, uint256 id, string name, string country)',
+  'function registerStudent(address account, uint256 id, string nom, string prenom, string email)',
+  'function registerSchool(address account, uint256 id, string name, string country)',
   'event DiplomaMinted(address indexed to, uint256 indexed tokenId, string studentName, string institution)',
   'event SchoolAccredited(address indexed addedBy, address schoolAcc)',
 ];

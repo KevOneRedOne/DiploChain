@@ -7,6 +7,7 @@ import {
   CompanyProfile as CompanyProfileType,
 } from '../../hooks/useCompany';
 import { TokenBalance } from '../../types/web3';
+import CompanyRegistration from './CompanyRegistration';
 import styles from './CompanyProfile.module.scss';
 
 interface CompanyProfileProps {
@@ -90,22 +91,7 @@ const CompanyProfile: React.FC<CompanyProfileProps> = ({ onBuyTokens }) => {
   }
 
   if (!profile) {
-    return (
-      <div className={styles.notRegistered}>
-        <h3>🏢 Entreprise non enregistrée</h3>
-        <p>
-          Cette adresse n'est pas enregistrée comme entreprise dans le système.
-        </p>
-        <p>
-          <strong>Adresse:</strong> {account}
-        </p>
-        <div className={styles.note}>
-          <p>
-            Pour vous enregistrer, contactez l'administrateur de la plateforme.
-          </p>
-        </div>
-      </div>
-    );
+    return <CompanyRegistration />;
   }
 
   const formatTokenBalance = (balance: TokenBalance | null) => {

@@ -4,9 +4,11 @@ import Header from '../../../components/Header';
 import { useState, useEffect } from 'react';
 import { useWeb3 } from '../../../context/Web3Context';
 import { useCompany, DiplomaVerification } from '../../../hooks/useCompany';
-import CompanyProfile from '../../../components/Company/CompanyProfile';
-import DiplomaVerifier from '../../../components/Company/DiplomaVerifier';
-import StudentEvaluator from '../../../components/Company/StudentEvaluator';
+import {
+  CompanyProfile,
+  DiplomaVerifier,
+  StudentEvaluator,
+} from '../../../components/Company';
 import styles from './index.module.scss';
 
 export default function CompaniesPage() {

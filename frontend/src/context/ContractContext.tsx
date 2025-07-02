@@ -336,6 +336,44 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const registerCompany = async (
+    companyAddress: string,
+    id: number,
+    name: string,
+    country: string
+  ) => {
+    if (!diplomaNFTContract || !signer) {
+      throw new Error('Contrat non initialisé ou signer manquant');
+    }
+
+    setIsTransactionPending(true);
+    setError(null);
+
+    try {
+      const contractWithSigner = diplomaNFTContract.connect(signer);
+      const tx = await contractWithSigner.registerCompany(
+        companyAddress,
+        id,
+        name,
+        country
+      );
+
+      setLastTransactionHash(tx.hash);
+      console.log("Transaction d'enregistrement d'entreprise soumise:", tx.hash);
+
+      const receipt = await tx.wait();
+      console.log('Entreprise enregistrée:', receipt);
+
+      return receipt;
+    } catch (err: any) {
+      console.error("Erreur lors de l'enregistrement de l'entreprise:", err);
+      setError(`Erreur lors de l'enregistrement de l'entreprise: ${err.message}`);
+      throw err;
+    } finally {
+      setIsTransactionPending(false);
+    }
+  };
+
   const value: ContractContextType = {
     diplomaNFTContract,
     diplomaTokenContract,
@@ -346,6 +384,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     getUserDiplomas,
     addAccreditedSchool,
     isSchoolAccredited,
+    registerCompany,
 
     buyTokens,
     getTokenBalance,

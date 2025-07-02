@@ -29,7 +29,7 @@ export const useCompany = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // 1. Récupérer le profil entreprise
+    // 1. Récupérer le profil entreprise
   const getCompanyProfile = useCallback(
     async (address?: string): Promise<CompanyProfile | null> => {
       if (!diplomaNFTContract) {
@@ -47,20 +47,25 @@ export const useCompany = () => {
       try {
         const company = await diplomaNFTContract.companies(companyAddress);
 
-        if (!company.id || company.id === 0) {
+        if (!company || !company.id || company.id === 0 || !company.name) {
           return null;
         }
 
         return {
           id: Number(company.id),
           name: company.name,
-          country: company.country,
+          country: company.country || 'Non spécifié',
         };
       } catch (err: any) {
         console.error(
           'Erreur lors de la récupération du profil entreprise:',
           err
         );
+
+        if (err.code === 'CALL_EXCEPTION' && err.reason === null) {
+          console.log('Entreprise non enregistrée dans le contrat');
+          return null;
+        }
         setError(`Erreur: ${err.message}`);
         return null;
       } finally {
