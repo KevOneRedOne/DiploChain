@@ -1,7 +1,10 @@
 'use client';
 
-import Header from '../../../components/Header';
 import { useState } from 'react';
+import Header from '../../../components/Header';
+import DiplomaMinter from '../../../components/Diploma/DiplomaMinter';
+import SchoolManager from '../../../components/Diploma/SchoolManager';
+import TokenManager from '../../../components/Token/TokenManager';
 import styles from './index.module.scss';
 
 export default function InstitutionsPage() {
@@ -46,11 +49,13 @@ export default function InstitutionsPage() {
   return (
     <div className="institutions-page">
       <Header />
-      
+
       <div className={styles.container}>
         <div className={styles.header}>
           <h1 className={styles.title}>🏛️ Espace Établissement</h1>
-          <p className={styles.subtitle}>Gérez vos étudiants et émettez des diplômes blockchain</p>
+          <p className={styles.subtitle}>
+            Gérez vos étudiants et émettez des diplômes blockchain
+          </p>
         </div>
 
         {/* Stats Cards */}
@@ -74,34 +79,73 @@ export default function InstitutionsPage() {
 
         {/* Navigation Tabs */}
         <div className={styles.tabNav}>
-          <button 
+          <button
             className={`${styles.tabButton} ${activeTab === 'overview' ? styles.activeTab : ''}`}
             onClick={() => setActiveTab('overview')}
           >
             Vue d'ensemble
           </button>
-          <button 
+          <button
+            className={`${styles.tabButton} ${activeTab === 'mint' ? styles.activeTab : ''}`}
+            onClick={() => setActiveTab('mint')}
+          >
+            Minter Diplôme
+          </button>
+          <button
+            className={`${styles.tabButton} ${activeTab === 'schools' ? styles.activeTab : ''}`}
+            onClick={() => setActiveTab('schools')}
+          >
+            Gérer Écoles
+          </button>
+          <button
+            className={`${styles.tabButton} ${activeTab === 'tokens' ? styles.activeTab : ''}`}
+            onClick={() => setActiveTab('tokens')}
+          >
+            Tokens
+          </button>
+          <button
             className={`${styles.tabButton} ${activeTab === 'students' ? styles.activeTab : ''}`}
             onClick={() => setActiveTab('students')}
           >
             Étudiants
           </button>
-          <button 
+          <button
             className={`${styles.tabButton} ${activeTab === 'diplomas' ? styles.activeTab : ''}`}
             onClick={() => setActiveTab('diplomas')}
           >
-            Diplômes
+            Diplômes Émis
           </button>
         </div>
 
         {/* Content based on active tab */}
         <div className={styles.content}>
+          {activeTab === 'mint' && (
+            <div className={styles.mintSection}>
+              <DiplomaMinter />
+            </div>
+          )}
+
+          {activeTab === 'schools' && (
+            <div className={styles.schoolsSection}>
+              <SchoolManager />
+            </div>
+          )}
+
+          {activeTab === 'tokens' && (
+            <div className={styles.tokensSection}>
+              <TokenManager />
+            </div>
+          )}
+
           {activeTab === 'overview' && (
             <div className={styles.overview}>
               <div className={styles.welcomeCard}>
-                <h2 className={styles.welcomeTitle}>Tableau de Bord Établissement 🏛️</h2>
+                <h2 className={styles.welcomeTitle}>
+                  Tableau de Bord Établissement 🏛️
+                </h2>
                 <p className={styles.welcomeText}>
-                  Gérez efficacement vos étudiants et émettez des diplômes vérifiables sur la blockchain.
+                  Gérez efficacement vos étudiants et émettez des diplômes
+                  vérifiables sur la blockchain.
                 </p>
                 <div className={styles.actionButtons}>
                   <button className={styles.primaryAction}>
@@ -120,14 +164,20 @@ export default function InstitutionsPage() {
                     <div className={styles.activityIcon}>🎓</div>
                     <div>
                       <div className={styles.activityTitle}>Diplôme émis</div>
-                      <div className={styles.activityDate}>Master IA pour Sophie Martin - il y a 1 jour</div>
+                      <div className={styles.activityDate}>
+                        Master IA pour Sophie Martin - il y a 1 jour
+                      </div>
                     </div>
                   </div>
                   <div className={styles.activityItem}>
                     <div className={styles.activityIcon}>👨‍🎓</div>
                     <div>
-                      <div className={styles.activityTitle}>Nouvel étudiant inscrit</div>
-                      <div className={styles.activityDate}>Thomas Dubois - il y a 3 jours</div>
+                      <div className={styles.activityTitle}>
+                        Nouvel étudiant inscrit
+                      </div>
+                      <div className={styles.activityDate}>
+                        Thomas Dubois - il y a 3 jours
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -139,9 +189,11 @@ export default function InstitutionsPage() {
             <div className={styles.studentsSection}>
               <div className={styles.sectionHeader}>
                 <h3 className={styles.sectionTitle}>Gestion des Étudiants</h3>
-                <button className={styles.addButton}>+ Ajouter un étudiant</button>
+                <button className={styles.addButton}>
+                  + Ajouter un étudiant
+                </button>
               </div>
-              
+
               <div className={styles.tableContainer}>
                 <table className={styles.table}>
                   <thead className={styles.tableHeader}>
@@ -154,14 +206,16 @@ export default function InstitutionsPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {mockStudents.map((student) => (
+                    {mockStudents.map(student => (
                       <tr key={student.id} className={styles.tableRow}>
                         <td className={styles.td}>{student.name}</td>
                         <td className={styles.td}>{student.email}</td>
                         <td className={styles.td}>{student.program}</td>
                         <td className={styles.td}>{student.status}</td>
                         <td className={styles.td}>
-                          <button className={styles.actionBtn}>Voir Profil</button>
+                          <button className={styles.actionBtn}>
+                            Voir Profil
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -175,15 +229,19 @@ export default function InstitutionsPage() {
             <div className={styles.diplomasSection}>
               <div className={styles.sectionHeader}>
                 <h3 className={styles.sectionTitle}>Diplômes Blockchain</h3>
-                <button className={styles.addButton}>+ Émettre un diplôme</button>
+                <button className={styles.addButton}>
+                  + Émettre un diplôme
+                </button>
               </div>
-              
+
               <div className={styles.diplomasGrid}>
-                {mockDiplomas.map((diploma) => (
+                {mockDiplomas.map(diploma => (
                   <div key={diploma.id} className={styles.diplomaCard}>
                     <div className={styles.diplomaHeader}>
                       <div className={styles.diplomaIcon}>🎓</div>
-                      <div className={styles.statusBadge}>✅ {diploma.status}</div>
+                      <div className={styles.statusBadge}>
+                        ✅ {diploma.status}
+                      </div>
                     </div>
                     <h4 className={styles.diplomaTitle}>{diploma.title}</h4>
                     <p className={styles.diplomaStudent}>{diploma.student}</p>

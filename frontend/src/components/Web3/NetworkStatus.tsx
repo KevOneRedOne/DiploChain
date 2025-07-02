@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { NETWORKS, SUPPORTED_CHAIN_IDS } from '../../config/networks';
+import { NETWORKS, isSupportedChainIdNumeric } from '../../config/networks';
 import { useWeb3 } from '../../context/Web3Context';
 
 const NetworkStatus: React.FC = () => {
@@ -19,9 +19,7 @@ const NetworkStatus: React.FC = () => {
   };
 
   const currentNetwork = getCurrentNetwork();
-  const isSupported = chainId
-    ? SUPPORTED_CHAIN_IDS.includes(`0x${chainId.toString(16)}`)
-    : false;
+  const isSupported = chainId ? isSupportedChainIdNumeric(chainId) : false;
 
   return (
     <div className="network-status">

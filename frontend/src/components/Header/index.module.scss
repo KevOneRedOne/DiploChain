@@ -115,7 +115,7 @@ $crypto-shadow-hover: 0 6px 20px rgba(0, 210, 255, 0.4);
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    
+
     .accountAddressNav {
       color: white;
       background: rgba(255, 255, 255, 0.15);
@@ -253,7 +253,7 @@ $crypto-shadow-hover: 0 6px 20px rgba(0, 210, 255, 0.4);
     box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
     background: #f8f9fa !important;
     color: #1a202c !important;
-    
+
     * {
       color: #1a202c !important;
     }
@@ -264,7 +264,7 @@ $crypto-shadow-hover: 0 6px 20px rgba(0, 210, 255, 0.4);
     cursor: not-allowed;
     transform: none;
     color: #6c757d !important;
-    
+
     * {
       color: #6c757d !important;
     }
@@ -293,6 +293,10 @@ $crypto-shadow-hover: 0 6px 20px rgba(0, 210, 255, 0.4);
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
