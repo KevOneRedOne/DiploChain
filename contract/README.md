@@ -1,13 +1,32 @@
-# Sample Hardhat Project
+myth analyze -a <adresse_du_contrat> --rpc <url_rpc_blaze> -l
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+Diploma token : 
+0xF0bC756473b8667912E7EB0413301ceCf5c08a4A
+https://testnet.sonicscan.org/address/0x856b011af1F0cACf6D768AA390A0Da6f3E2be9B9
 
-Try running some of the following tasks:
+myth analyze -a 0xF0bC756473b8667912E7EB0413301ceCf5c08a4A --rpc https://rpc.blaze.soniclabs.com 
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
-```
+
+Diploma NFT: 
+0x232B40F317315A303D75A7d846c85e8330db4329
+https://testnet.sonicscan.org/address/0x856b011af1F0cACf6D768AA390A0Da6f3E2be9B9
+
+myth analyze -a 0x232B40F317315A303D75A7d846c85e8330db4329 --rpc https://rpc.blaze.soniclabs.com -v INFO
+
+
+Sur la blockchain BLAZE
+
+Network name: Sonic Blaze Testnet
+
+RPC URL: https://rpc.blaze.soniclabs.com
+
+Explorer URL: https://testnet.sonicscan.org
+
+Chain ID: 57054
+
+Currency symbol: S
+
+Faucet: https://testnet.soniclabs.com/account
+
+
+
