@@ -359,7 +359,10 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       );
 
       setLastTransactionHash(tx.hash);
-      console.log("Transaction d'enregistrement d'entreprise soumise:", tx.hash);
+      console.log(
+        "Transaction d'enregistrement d'entreprise soumise:",
+        tx.hash
+      );
 
       const receipt = await tx.wait();
       console.log('Entreprise enregistrée:', receipt);
@@ -367,7 +370,9 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       return receipt;
     } catch (err: any) {
       console.error("Erreur lors de l'enregistrement de l'entreprise:", err);
-      setError(`Erreur lors de l'enregistrement de l'entreprise: ${err.message}`);
+      setError(
+        `Erreur lors de l'enregistrement de l'entreprise: ${err.message}`
+      );
       throw err;
     } finally {
       setIsTransactionPending(false);

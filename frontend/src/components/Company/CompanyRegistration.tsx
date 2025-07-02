@@ -13,10 +13,13 @@ const CompanyRegistration: React.FC = () => {
     address: account || '',
     id: 1,
     name: '',
-    country: 'France'
+    country: 'France',
   });
   const [showForm, setShowForm] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: 'success' | 'error';
+    text: string;
+  } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,34 +37,35 @@ const CompanyRegistration: React.FC = () => {
         formData.name,
         formData.country
       );
-      
-      setMessage({ 
-        type: 'success', 
-        text: `Entreprise "${formData.name}" enregistrée avec succès !` 
+
+      setMessage({
+        type: 'success',
+        text: `Entreprise "${formData.name}" enregistrée avec succès !`,
       });
-      
+
       // Réinitialiser le formulaire
       setFormData({
         address: account || '',
         id: formData.id + 1,
         name: '',
-        country: 'France'
+        country: 'France',
       });
-      
     } catch (error: any) {
-      console.error('Erreur lors de l\'enregistrement:', error);
-      setMessage({ 
-        type: 'error', 
-        text: `Erreur: ${error.message}` 
+      console.error("Erreur lors de l'enregistrement:", error);
+      setMessage({
+        type: 'error',
+        text: `Erreur: ${error.message}`,
       });
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'id' ? Number(value) : value
+      [name]: name === 'id' ? Number(value) : value,
     }));
   };
 
@@ -72,7 +76,7 @@ const CompanyRegistration: React.FC = () => {
       { name: 'Digital Dynamics', country: 'Espagne' },
       { name: 'Future Systems', country: 'Italie' },
     ];
-    
+
     return testCompanies[Math.floor(Math.random() * testCompanies.length)];
   };
 
@@ -81,7 +85,7 @@ const CompanyRegistration: React.FC = () => {
     setFormData(prev => ({
       ...prev,
       name: testCompany.name,
-      country: testCompany.country
+      country: testCompany.country,
     }));
   };
 
@@ -91,23 +95,31 @@ const CompanyRegistration: React.FC = () => {
         <div className={styles.notice}>
           <h4>🏢 Enregistrement d'Entreprise</h4>
           <p>
-            Votre adresse n'est pas enregistrée comme entreprise. 
-            Seul l'administrateur du contrat peut enregistrer de nouvelles entreprises.
+            Votre adresse n'est pas enregistrée comme entreprise. Seul
+            l'administrateur du contrat peut enregistrer de nouvelles
+            entreprises.
           </p>
-          
+
           {/* Bouton pour tester (seulement si c'est l'owner du contrat) */}
-          <button 
+          <button
             className={styles.testButton}
             onClick={() => setShowForm(true)}
           >
             🧪 Mode Test - Enregistrer cette adresse
           </button>
-          
+
           <div className={styles.helpText}>
-            <p><strong>Pour les tests:</strong></p>
+            <p>
+              <strong>Pour les tests:</strong>
+            </p>
             <ul>
-              <li>Utilisez le bouton ci-dessus pour vous enregistrer en tant qu'entreprise de test</li>
-              <li>En production, contactez l'administrateur de la plateforme</li>
+              <li>
+                Utilisez le bouton ci-dessus pour vous enregistrer en tant
+                qu'entreprise de test
+              </li>
+              <li>
+                En production, contactez l'administrateur de la plateforme
+              </li>
             </ul>
           </div>
         </div>
@@ -119,7 +131,7 @@ const CompanyRegistration: React.FC = () => {
     <div className={styles.companyRegistration}>
       <div className={styles.header}>
         <h4>🏢 Enregistrement d'Entreprise</h4>
-        <button 
+        <button
           className={styles.closeButton}
           onClick={() => setShowForm(false)}
         >
@@ -200,7 +212,7 @@ const CompanyRegistration: React.FC = () => {
               className={styles.input}
               required
             />
-            <button 
+            <button
               type="button"
               onClick={fillTestData}
               className={styles.generateButton}
@@ -217,20 +229,22 @@ const CompanyRegistration: React.FC = () => {
         )}
 
         <div className={styles.actions}>
-          <button 
+          <button
             type="button"
             onClick={() => setShowForm(false)}
             className={styles.cancelButton}
           >
             Annuler
           </button>
-          
-          <button 
+
+          <button
             type="submit"
             disabled={isTransactionPending}
             className={styles.submitButton}
           >
-            {isTransactionPending ? 'Enregistrement...' : 'Enregistrer l\'entreprise'}
+            {isTransactionPending
+              ? 'Enregistrement...'
+              : "Enregistrer l'entreprise"}
           </button>
         </div>
       </form>
@@ -238,4 +252,4 @@ const CompanyRegistration: React.FC = () => {
   );
 };
 
-export default CompanyRegistration; 
+export default CompanyRegistration;

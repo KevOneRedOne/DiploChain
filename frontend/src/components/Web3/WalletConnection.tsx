@@ -133,7 +133,7 @@ const WalletConnection: React.FC = () => {
           <div className="wallet-info">
             <div className="account-info">
               <span className="label">Compte:</span>
-              <div 
+              <div
                 className="address-container"
                 onClick={() => account && copyToClipboard(account)}
                 title={`${account} (Cliquer pour copier)`}
@@ -142,9 +142,7 @@ const WalletConnection: React.FC = () => {
                   {account ? formatAddress(account) : 'N/A'}
                 </span>
                 <span className="copy-icon">📋</span>
-                <span className="full-address">
-                  {account || 'N/A'}
-                </span>
+                <span className="full-address">{account || 'N/A'}</span>
                 {copied && <span className="copy-feedback">✓ Copié!</span>}
               </div>
             </div>
@@ -349,7 +347,8 @@ const WalletConnection: React.FC = () => {
         }
 
         .address {
-          font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+          font-family:
+            'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
           font-weight: 500;
           color: white;
           font-size: 0.8rem;
@@ -381,7 +380,8 @@ const WalletConnection: React.FC = () => {
           color: white;
           padding: 0.5rem 0.75rem;
           border-radius: 8px;
-          font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+          font-family:
+            'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
           font-size: 0.75rem;
           white-space: nowrap;
           opacity: 0;
@@ -440,8 +440,15 @@ const WalletConnection: React.FC = () => {
         }
 
         @keyframes fadeInOut {
-          0%, 100% { opacity: 0; transform: translateY(10px); }
-          50% { opacity: 1; transform: translateY(5px); }
+          0%,
+          100% {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          50% {
+            opacity: 1;
+            transform: translateY(5px);
+          }
         }
 
         /* Responsive */

@@ -29,7 +29,7 @@ export const useCompany = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-    // 1. Récupérer le profil entreprise
+  // 1. Récupérer le profil entreprise
   const getCompanyProfile = useCallback(
     async (address?: string): Promise<CompanyProfile | null> => {
       if (!diplomaNFTContract) {

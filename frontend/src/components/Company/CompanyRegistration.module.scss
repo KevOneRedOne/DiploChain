@@ -8,13 +8,13 @@
 
 .notice {
   text-align: center;
-  
+
   h4 {
     margin: 0 0 16px 0;
     font-size: 1.3rem;
     font-weight: 600;
   }
-  
+
   p {
     margin: 0 0 24px 0;
     opacity: 0.9;
@@ -32,7 +32,7 @@
   cursor: pointer;
   margin-bottom: 24px;
   transition: all 0.3s ease;
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
@@ -44,16 +44,16 @@
   border-radius: 8px;
   padding: 16px;
   text-align: left;
-  
+
   p {
     margin: 0 0 8px 0;
     font-weight: 600;
   }
-  
+
   ul {
     margin: 0;
     padding-left: 20px;
-    
+
     li {
       margin: 4px 0;
       opacity: 0.9;
@@ -67,7 +67,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-  
+
   h4 {
     margin: 0;
     font-size: 1.3rem;
@@ -88,7 +88,7 @@
   font-size: 1.2rem;
   color: white;
   transition: all 0.3s ease;
-  
+
   &:hover {
     background: rgba(255, 255, 255, 0.3);
   }
@@ -110,7 +110,7 @@
   display: grid;
   grid-template-columns: 120px 1fr;
   gap: 16px;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
@@ -130,17 +130,17 @@
   background: rgba(255, 255, 255, 0.1);
   color: white;
   transition: all 0.3s ease;
-  
+
   &:focus {
     outline: none;
     border-color: rgba(255, 255, 255, 0.5);
     background: rgba(255, 255, 255, 0.15);
   }
-  
+
   &::placeholder {
     color: rgba(255, 255, 255, 0.6);
   }
-  
+
   option {
     background: #374151;
     color: white;
@@ -150,7 +150,7 @@
 .inputWithButton {
   display: flex;
   gap: 8px;
-  
+
   .input {
     flex: 1;
   }
@@ -166,7 +166,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
-  
+
   &:hover {
     background: rgba(255, 255, 255, 0.3);
     border-color: rgba(255, 255, 255, 0.4);
@@ -177,13 +177,13 @@
   padding: 12px 16px;
   border-radius: 8px;
   font-weight: 500;
-  
+
   &.success {
     background: rgba(16, 185, 129, 0.2);
     border: 1px solid rgba(16, 185, 129, 0.4);
     color: #d1fae5;
   }
-  
+
   &.error {
     background: rgba(248, 113, 113, 0.2);
     border: 1px solid rgba(248, 113, 113, 0.4);
@@ -196,7 +196,7 @@
   gap: 12px;
   justify-content: flex-end;
   margin-top: 8px;
-  
+
   @media (max-width: 768px) {
     flex-direction: column;
   }
@@ -211,7 +211,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  
+
   &:hover {
     background: rgba(255, 255, 255, 0.2);
   }
@@ -226,12 +226,12 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  
+
   &:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
   }
-  
+
   &:disabled {
     background: rgba(156, 163, 175, 0.5);
     cursor: not-allowed;
@@ -244,4 +244,4 @@
   .companyRegistration {
     padding: 16px;
   }
-} 
+}
