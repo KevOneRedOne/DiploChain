@@ -1,0 +1,49 @@
+# Ignore artifacts:
+build
+coverage
+
+# Ignore build directories
+dist
+out
+
+# Ignore node_modules
+node_modules
+
+# Ignore .gitignore file
+.gitignore
+
+# Ignore logs
+*.log
+
+# Ignore lock files
+yarn.lock
+package-lock.json
+
+# Ignore .env files
+.env
+.env.local
+.env.development
+.env.*.local
+
+# Ignore .idea directory
+.idea
+
+# Ignore .vscode and others directories
+.vscode
+.husky
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore other files
+*.lnk
+*.yml
+*.yaml
+
+# Ignore tsconfig files
+tsconfig.json
+
+# Ignore mermaid files
+docs/mermaid/**
