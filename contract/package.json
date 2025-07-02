@@ -1,0 +1,16 @@
+{
+  "name": "diplochain-contracts",
+  "version": "1.0.0",
+  "description": "Smart contracts for DiploChain - a blockchain-based diploma verification system",
+  "scripts": {
+    "build": "npx hardhat run --network localhost scripts/deployDiploma.ts",
+    "compile": "npx hardhat compile",
+    "test": "npx hardhat test",
+    "slither": "slither contracts"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^6.0.0",
+    "@openzeppelin/contracts": "^5.3.0",
+    "hardhat": "^2.25.0"
+  }
+}
