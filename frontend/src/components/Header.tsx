@@ -14,17 +14,16 @@ const Header: React.FC = () => {
         <div className="header-content">
           {/* Logo et titre */}
           <div className="brand">
-            <h1 className="logo">🎓 DiploChain</h1>
-            <span className="tagline">
-              Vérification de Diplômes sur Blockchain
-            </span>
+            <a href="/" className="logo-link">
+              <h1 className="logo">🎓 DiploChain</h1>
+              <span className="tagline">
+                Vérification de Diplômes sur Blockchain
+              </span>
+            </a>
           </div>
 
           {/* Navigation principale */}
           <nav className="nav">
-            <a href="/" className="nav-link">
-              Accueil
-            </a>
             <a href="/Dashboard/Students" className="nav-link">
               Étudiants
             </a>
@@ -42,15 +41,6 @@ const Header: React.FC = () => {
             <WalletConnection />
           </div>
         </div>
-
-        {/* Barre d'information utilisateur connecté */}
-        {isConnected && account && (
-          <div className="user-info">
-            <div className="welcome-message">
-              ✅ Connecté en tant que: <code>{account}</code>
-            </div>
-          </div>
-        )}
       </div>
 
       <style jsx>{`
@@ -58,7 +48,11 @@ const Header: React.FC = () => {
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           color: white;
           padding: 1rem 0;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          backdrop-filter: blur(10px);
         }
 
         .container {
@@ -81,6 +75,17 @@ const Header: React.FC = () => {
           align-items: flex-start;
         }
 
+        .logo-link {
+          text-decoration: none;
+          color: inherit;
+          transition: all 0.3s ease;
+        }
+
+        .logo-link:hover {
+          transform: translateY(-1px);
+          opacity: 0.9;
+        }
+
         .logo {
           margin: 0;
           font-size: 1.8rem;
@@ -89,6 +94,7 @@ const Header: React.FC = () => {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
+          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
         .tagline {
@@ -101,6 +107,7 @@ const Header: React.FC = () => {
           display: flex;
           gap: 2rem;
           align-items: center;
+          flex-wrap: wrap;
         }
 
         .nav-link {
@@ -108,9 +115,10 @@ const Header: React.FC = () => {
           text-decoration: none;
           font-weight: 500;
           padding: 0.5rem 1rem;
-          border-radius: 6px;
+          border-radius: 8px;
           transition: all 0.3s ease;
           opacity: 0.9;
+          white-space: nowrap;
         }
 
         .nav-link:hover {
@@ -122,38 +130,34 @@ const Header: React.FC = () => {
         .wallet-section {
           display: flex;
           flex-direction: column;
-          gap: 0.5rem;
+          gap: 0.75rem;
           align-items: flex-end;
+          flex-shrink: 0;
+          min-width: 320px;
         }
 
-        .user-info {
-          margin-top: 1rem;
-          padding: 0.75rem;
-          background: rgba(255, 255, 255, 0.1);
-          border-radius: 8px;
-          backdrop-filter: blur(10px);
-        }
-
-        .welcome-message {
-          font-size: 0.9rem;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-
-        .welcome-message code {
-          background: rgba(0, 0, 0, 0.2);
-          padding: 0.25rem 0.5rem;
-          border-radius: 4px;
-          font-family: 'Courier New', monospace;
-          font-size: 0.8rem;
+        /* Animations */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         /* Responsive */
         @media (max-width: 768px) {
+          .header {
+            padding: 0.75rem 0;
+          }
+
           .header-content {
             flex-direction: column;
             text-align: center;
+            gap: 1.5rem;
           }
 
           .nav {
@@ -161,6 +165,7 @@ const Header: React.FC = () => {
             width: 100%;
             justify-content: center;
             flex-wrap: wrap;
+            gap: 1rem;
           }
 
           .wallet-section {
@@ -176,10 +181,6 @@ const Header: React.FC = () => {
           .logo {
             font-size: 1.5rem;
           }
-
-          .nav {
-            gap: 1rem;
-          }
         }
 
         @media (max-width: 480px) {
@@ -192,6 +193,14 @@ const Header: React.FC = () => {
             padding: 0.5rem;
             width: 100%;
             text-align: center;
+          }
+
+          .logo {
+            font-size: 1.3rem;
+          }
+
+          .tagline {
+            font-size: 0.8rem;
           }
         }
       `}</style>

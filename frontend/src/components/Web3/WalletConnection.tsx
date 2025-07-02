@@ -10,6 +10,7 @@ import { useWeb3 } from '../../context/Web3Context';
 
 const WalletConnection: React.FC = () => {
   const [mounted, setMounted] = useState(false);
+  const [copied, setCopied] = useState(false);
   const {
     account,
     chainId,
@@ -27,6 +28,16 @@ const WalletConnection: React.FC = () => {
 
   const formatAddress = (address: string): string => {
     return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+  };
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Erreur lors de la copie:', err);
+    }
   };
 
   const getCurrentNetwork = () => {
@@ -51,6 +62,7 @@ const WalletConnection: React.FC = () => {
       <div className="wallet-connection">
         <div className="connect-section">
           <button disabled className="btn btn-primary btn-lg">
+            <span className="spinner"></span>
             Chargement...
           </button>
         </div>
@@ -62,16 +74,19 @@ const WalletConnection: React.FC = () => {
     return (
       <div className="wallet-connection">
         <div className="alert alert-warning">
-          <h4>⚠️ MetaMask requis</h4>
-          <p>Pour utiliser DiploChain, vous devez installer MetaMask.</p>
-          <a
-            href="https://metamask.io/download/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary"
-          >
-            Installer MetaMask
-          </a>
+          <div className="alert-icon">⚠️</div>
+          <div className="alert-content">
+            <h4>MetaMask requis</h4>
+            <p>Pour utiliser DiploChain, vous devez installer MetaMask.</p>
+            <a
+              href="https://metamask.io/download/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary"
+            >
+              Installer MetaMask
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -86,7 +101,10 @@ const WalletConnection: React.FC = () => {
     <div className="wallet-connection">
       {error && (
         <div className="alert alert-danger">
-          <strong>Erreur:</strong> {error}
+          <div className="alert-icon">❌</div>
+          <div className="alert-content">
+            <strong>Erreur:</strong> {error}
+          </div>
         </div>
       )}
 
@@ -103,7 +121,10 @@ const WalletConnection: React.FC = () => {
                 Connexion...
               </>
             ) : (
-              '🦊 Connecter MetaMask'
+              <>
+                <span className="btn-icon">🦊</span>
+                Connecter MetaMask
+              </>
             )}
           </button>
         </div>
@@ -112,37 +133,35 @@ const WalletConnection: React.FC = () => {
           <div className="wallet-info">
             <div className="account-info">
               <span className="label">Compte:</span>
-              <span className="address" title={account || ''}>
-                {account ? formatAddress(account) : 'N/A'}
-              </span>
+              <div 
+                className="address-container"
+                onClick={() => account && copyToClipboard(account)}
+                title={`${account} (Cliquer pour copier)`}
+              >
+                <span className="address">
+                  {account ? formatAddress(account) : 'N/A'}
+                </span>
+                <span className="copy-icon">📋</span>
+                <span className="full-address">
+                  {account || 'N/A'}
+                </span>
+                {copied && <span className="copy-feedback">✓ Copié!</span>}
+              </div>
             </div>
 
             <div className="network-info">
               <span className="label">Réseau:</span>
-              <span
-                className={`network ${isNetworkSupported ? 'connected' : 'unknown'}`}
-              >
+              <span className="network connected">
                 {currentNetwork
                   ? currentNetwork.chainName
-                  : isNetworkSupported
-                    ? `Blaze Testnet (${chainId})`
-                    : `Non supporté (${chainId})`}
+                  : `Blaze Testnet (${chainId})`}
               </span>
             </div>
-
-            {chainId && !isNetworkSupported && (
-              <button
-                onClick={handleNetworkSwitch}
-                className="btn btn-warning btn-sm"
-              >
-                Changer vers {NETWORKS[DEFAULT_NETWORK].chainName}
-              </button>
-            )}
           </div>
 
           <button
             onClick={disconnectWallet}
-            className="btn btn-outline-secondary btn-sm"
+            className="btn btn-danger btn-sm disconnect-btn"
           >
             Déconnecter
           </button>
@@ -151,136 +170,320 @@ const WalletConnection: React.FC = () => {
 
       <style jsx>{`
         .wallet-connection {
-          padding: 1rem;
-          border-radius: 8px;
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
         }
 
         .alert {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.75rem;
           padding: 1rem;
-          border-radius: 4px;
-          margin-bottom: 1rem;
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(10px);
         }
 
         .alert-warning {
-          background-color: #fff3cd;
-          border-color: #ffeaa7;
-          color: #856404;
+          background: rgba(255, 193, 7, 0.1);
+          border-color: rgba(255, 193, 7, 0.3);
+          color: #fff3cd;
         }
 
         .alert-danger {
-          background-color: #f8d7da;
-          border-color: #f5c6cb;
-          color: #721c24;
+          background: rgba(220, 53, 69, 0.1);
+          border-color: rgba(220, 53, 69, 0.3);
+          color: #f8d7da;
+        }
+
+        .alert-icon {
+          font-size: 1.2rem;
+          flex-shrink: 0;
+        }
+
+        .alert-content h4 {
+          margin: 0 0 0.5rem 0;
+          color: inherit;
+          font-size: 1rem;
+          font-weight: 600;
+        }
+
+        .alert-content p {
+          margin: 0 0 0.75rem 0;
+          color: inherit;
+          opacity: 0.9;
         }
 
         .connect-section,
         .connected-section {
-          text-align: center;
-          color: #000000;
-        }
-
-        .connect-section h3,
-        .connect-section p,
-        .connected-section h3,
-        .connected-section p {
-          color: #000000 !important;
+          display: flex;
+          align-items: center;
+          gap: 1rem;
         }
 
         .btn {
-          padding: 0.5rem 1rem;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          padding: 0.6rem 1.2rem;
           border: none;
-          border-radius: 40px;
+          border-radius: 25px;
           cursor: pointer;
           text-decoration: none;
-          display: inline-block;
-          font-weight: 500;
-          transition: all 0.2s;
+          font-weight: 600;
+          font-size: 0.9rem;
+          transition: all 0.3s ease;
+          white-space: nowrap;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .btn-primary {
-          background-color: #007bff;
+          background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
           color: white;
+          box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
         }
 
-        .btn-primary:hover {
-          background-color: #0056b3;
+        .btn-primary:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+          background: linear-gradient(135deg, #ff7b45 0%, #f8a32e 100%);
         }
 
         .btn-lg {
-          padding: 0.75rem 1.5rem;
-          font-size: 1.1rem;
+          padding: 0.8rem 1.6rem;
+          font-size: 1rem;
         }
 
         .btn-warning {
-          background-color: #ffc107;
-          color: #000000 !important;
+          background: linear-gradient(135deg, #ffc107 0%, #ff9500 100%);
+          color: white;
+          box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
         }
 
-        .btn-outline-secondary {
-          background-color: transparent;
-          border: 1px solid #000000;
-          color: #000000 !important;
+        .btn-warning:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+        }
+
+        .btn-danger {
+          background: linear-gradient(135deg, #ff4757 0%, #ff3742 100%);
+          color: white;
+          box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
+        }
+
+        .btn-danger:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(255, 71, 87, 0.4);
+          background: linear-gradient(135deg, #ff5757 0%, #ff4752 100%);
         }
 
         .btn-sm {
-          padding: 0.25rem 0.5rem;
-          font-size: 0.875rem;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.8rem;
         }
 
         .btn:disabled {
-          opacity: 0.6;
+          opacity: 0.7;
           cursor: not-allowed;
+          transform: none;
+          background: linear-gradient(135deg, #a0a0a0 0%, #808080 100%);
+        }
+
+        .btn-icon {
+          font-size: 1.1em;
+        }
+
+        .connected-section {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          white-space: nowrap;
         }
 
         .wallet-info {
-          background: white;
-          padding: 1rem;
-          border-radius: 6px;
-          margin-bottom: 1rem;
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          padding: 0.75rem 1rem;
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          min-width: 260px;
+          flex-shrink: 0;
+        }
+
+        .disconnect-btn {
+          flex-shrink: 0;
+          margin-left: 0.5rem;
         }
 
         .account-info,
         .network-info {
           display: flex;
           justify-content: space-between;
-          margin-bottom: 0.5rem;
+          align-items: center;
+          margin-bottom: 0.75rem;
+        }
+
+        .network-info:last-child {
+          margin-bottom: 0;
         }
 
         .label {
           font-weight: 600;
-          color: #000000 !important;
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 0.85rem;
+        }
+
+        .address-container {
+          position: relative;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.25rem 0.5rem;
+          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .address {
-          font-family: monospace;
+          font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
           font-weight: 500;
-          color: #000000 !important;
+          color: white;
+          font-size: 0.8rem;
+          letter-spacing: 0.5px;
+          transition: all 0.3s ease;
+        }
+
+        .copy-icon {
+          font-size: 0.9rem;
+          opacity: 0.7;
+          transition: all 0.3s ease;
+        }
+
+        .address-container:hover {
+          background: rgba(255, 255, 255, 0.2);
+          transform: scale(1.05);
+        }
+
+        .address-container:hover .copy-icon {
+          opacity: 1;
+          transform: scale(1.1);
+        }
+
+        .full-address {
+          position: absolute;
+          top: calc(100% + 0.5rem);
+          right: 0;
+          background: rgba(0, 0, 0, 0.9);
+          color: white;
+          padding: 0.5rem 0.75rem;
+          border-radius: 8px;
+          font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+          font-size: 0.75rem;
+          white-space: nowrap;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease;
+          z-index: 1000;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .address-container:hover .full-address {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(5px);
+        }
+
+        .copy-feedback {
+          position: absolute;
+          top: calc(100% + 1.5rem);
+          right: 0;
+          background: #4ade80;
+          color: white;
+          padding: 0.25rem 0.5rem;
+          border-radius: 4px;
+          font-size: 0.7rem;
+          font-weight: 600;
+          animation: fadeInOut 2s ease-in-out;
         }
 
         .network.connected {
-          color: #28a745;
-          font-weight: 500;
+          color: #4ade80;
+          font-weight: 600;
+          font-size: 0.85rem;
         }
 
         .network.unknown {
-          color: #dc3545;
-          font-weight: 500;
+          color: #f87171;
+          font-weight: 600;
+          font-size: 0.85rem;
         }
 
         .spinner {
           display: inline-block;
           width: 1rem;
           height: 1rem;
-          border: 2px solid transparent;
+          border: 2px solid rgba(255, 255, 255, 0.3);
           border-top: 2px solid currentColor;
           border-radius: 50%;
           animation: spin 1s linear infinite;
-          margin-right: 0.5rem;
         }
 
         @keyframes spin {
           to {
             transform: rotate(360deg);
+          }
+        }
+
+        @keyframes fadeInOut {
+          0%, 100% { opacity: 0; transform: translateY(10px); }
+          50% { opacity: 1; transform: translateY(5px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+          .connect-section {
+            align-items: center;
+          }
+
+          .connected-section {
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+          }
+
+          .wallet-info {
+            min-width: auto;
+            width: 100%;
+          }
+
+          .account-info,
+          .network-info {
+            flex-direction: column;
+            gap: 0.25rem;
+            text-align: center;
+          }
+
+          .btn-lg {
+            padding: 0.7rem 1.4rem;
+            font-size: 0.9rem;
+          }
+
+          .full-address {
+            right: 50%;
+            transform: translateX(50%);
+          }
+
+          .address-container:hover .full-address {
+            transform: translateX(50%) translateY(5px);
+          }
+
+          .disconnect-btn {
+            width: 100%;
           }
         }
       `}</style>
