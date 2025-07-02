@@ -22,17 +22,17 @@ const Header: React.FC = () => {
 
           {/* Navigation principale */}
           <nav className="nav">
-            <a href="#" className="nav-link">
+            <a href="/" className="nav-link">
               Accueil
             </a>
-            <a href="#institutions" className="nav-link">
+            <a href="/Dashboard/Students" className="nav-link">
+              Étudiants
+            </a>
+            <a href="/Dashboard/Institutions" className="nav-link">
               Établissements
             </a>
-            <a href="#companies" className="nav-link">
+            <a href="/Dashboard/Companies" className="nav-link">
               Entreprises
-            </a>
-            <a href="#students" className="nav-link">
-              Étudiants
             </a>
           </nav>
 

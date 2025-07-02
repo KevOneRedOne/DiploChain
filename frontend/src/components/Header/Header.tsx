@@ -98,6 +98,12 @@ export default function Header({ className = '' }: HeaderProps) {
           <a href="/Dashboard/Students" className={styles.navLink}>
             Étudiants
           </a>
+          <a href="/Dashboard/Institutions" className={styles.navLink}>
+            Établissements
+          </a>
+          <a href="/Dashboard/Companies" className={styles.navLink}>
+            Entreprises
+          </a>
 
           {/* Bouton MetaMask intégré dans la navbar */}
           {account ? (
@@ -128,13 +134,6 @@ export default function Header({ className = '' }: HeaderProps) {
               )}
             </button>
           )}
-
-          <a href="/Dashboard/Institutions" className={styles.navLink}>
-            Établissements
-          </a>
-          <a href="/Dashboard/Companies" className={styles.navLink}>
-            Entreprises
-          </a>
         </nav>
       </div>
     </header>
