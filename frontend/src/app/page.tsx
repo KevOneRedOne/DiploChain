@@ -90,7 +90,7 @@ export default function Home() {
               <p className={styles.contractAddress}>
                 0xF0bC756473b8667912E7EB0413301ceCf5c08a4A
               </p>
-                            <a 
+              <a
                 href="https://blaze.soniclabs.com/address/0xf0bc756473b8667912e7eb0413301cecf5c08a4a"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -111,7 +111,7 @@ export default function Home() {
               <p className={styles.contractAddress}>
                 0x232B40F317315A303D75A7d846c85e8330db4329
               </p>
-                            <a 
+              <a
                 href="https://blaze.soniclabs.com/address/0x232B40F317315A303D75A7d846c85e8330db4329"
                 target="_blank"
                 rel="noopener noreferrer"

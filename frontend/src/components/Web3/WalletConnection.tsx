@@ -1,7 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { DEFAULT_NETWORK, NETWORKS, isSupportedChainIdNumeric } from '../../config/networks';
+import {
+  DEFAULT_NETWORK,
+  NETWORKS,
+  isSupportedChainIdNumeric,
+} from '../../config/networks';
 import { useWeb3 } from '../../context/Web3Context';
 
 const WalletConnection: React.FC = () => {
@@ -74,7 +78,9 @@ const WalletConnection: React.FC = () => {
   }
 
   // Vérifier si le réseau actuel est supporté
-  const isNetworkSupported = chainId ? isSupportedChainIdNumeric(chainId) : false;
+  const isNetworkSupported = chainId
+    ? isSupportedChainIdNumeric(chainId)
+    : false;
 
   return (
     <div className="wallet-connection">
@@ -118,7 +124,7 @@ const WalletConnection: React.FC = () => {
               >
                 {currentNetwork
                   ? currentNetwork.chainName
-                  : isNetworkSupported 
+                  : isNetworkSupported
                     ? `Blaze Testnet (${chainId})`
                     : `Non supporté (${chainId})`}
               </span>

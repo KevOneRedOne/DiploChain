@@ -76,28 +76,34 @@ export const SUPPORTED_CHAIN_IDS = [
 
 // Liste des Chain IDs supportés en format numérique (plus fiable)
 export const SUPPORTED_CHAIN_IDS_NUMERIC = [
-  57054,  // Blaze testnet
-  31337,  // Hardhat
-  64165,  // Sonic testnet
+  57054, // Blaze testnet
+  31337, // Hardhat
+  64165, // Sonic testnet
   11155111, // Sepolia
-  5,      // Goerli
+  5, // Goerli
 ];
 
 // Fonction pour vérifier si un Chain ID est supporté
 export const isSupportedChainId = (chainId: number): boolean => {
   const hexChainId = `0x${chainId.toString(16).toUpperCase()}`;
-  console.log(`Debug isSupportedChainId: chainId=${chainId}, hexChainId=${hexChainId}`);
+  console.log(
+    `Debug isSupportedChainId: chainId=${chainId}, hexChainId=${hexChainId}`
+  );
   console.log(`SUPPORTED_CHAIN_IDS:`, SUPPORTED_CHAIN_IDS);
 
   // Debug chaque comparaison
   SUPPORTED_CHAIN_IDS.forEach((id, index) => {
     const upperCaseId = id.toUpperCase();
     const match = upperCaseId === hexChainId;
-    console.log(`Compare ${index}: '${upperCaseId}' === '${hexChainId}' = ${match}`);
+    console.log(
+      `Compare ${index}: '${upperCaseId}' === '${hexChainId}' = ${match}`
+    );
     console.log(`Length: ${upperCaseId.length} vs ${hexChainId.length}`);
   });
 
-  const isSupported = SUPPORTED_CHAIN_IDS.some(id => id.toUpperCase() === hexChainId);
+  const isSupported = SUPPORTED_CHAIN_IDS.some(
+    id => id.toUpperCase() === hexChainId
+  );
   console.log(`Result: ${isSupported}`);
   return isSupported;
 };
