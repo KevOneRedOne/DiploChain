@@ -1,7 +1,9 @@
 'use client';
 
-import Header from '../../../components/Header';
 import { useState } from 'react';
+import Header from '../../../components/Header';
+import DiplomaViewer from '../../../components/Diploma/DiplomaViewer';
+import TokenManager from '../../../components/Token/TokenManager';
 import styles from './index.module.scss';
 
 export default function StudentsPage() {
@@ -48,11 +50,13 @@ export default function StudentsPage() {
   return (
     <div className="students-page">
       <Header />
-      
+
       <div className={styles.container}>
         <div className={styles.header}>
           <h1 className={styles.title}>🎓 Espace Étudiant</h1>
-          <p className={styles.subtitle}>Gérez vos diplômes et consultez vos évaluations</p>
+          <p className={styles.subtitle}>
+            Gérez vos diplômes et consultez vos évaluations
+          </p>
         </div>
 
         {/* Stats Cards */}
@@ -76,19 +80,25 @@ export default function StudentsPage() {
 
         {/* Navigation Tabs */}
         <div className={styles.tabNav}>
-          <button 
+          <button
             className={`${styles.tabButton} ${activeTab === 'overview' ? styles.activeTab : ''}`}
             onClick={() => setActiveTab('overview')}
           >
             Vue d'ensemble
           </button>
-          <button 
+          <button
             className={`${styles.tabButton} ${activeTab === 'diplomas' ? styles.activeTab : ''}`}
             onClick={() => setActiveTab('diplomas')}
           >
-            Mes Diplômes
+            Mes Diplômes NFT
           </button>
-          <button 
+          <button
+            className={`${styles.tabButton} ${activeTab === 'tokens' ? styles.activeTab : ''}`}
+            onClick={() => setActiveTab('tokens')}
+          >
+            Tokens
+          </button>
+          <button
             className={`${styles.tabButton} ${activeTab === 'evaluations' ? styles.activeTab : ''}`}
             onClick={() => setActiveTab('evaluations')}
           >
@@ -98,12 +108,27 @@ export default function StudentsPage() {
 
         {/* Content based on active tab */}
         <div className={styles.content}>
+          {activeTab === 'diplomas' && (
+            <div className={styles.diplomasSection}>
+              <DiplomaViewer />
+            </div>
+          )}
+
+          {activeTab === 'tokens' && (
+            <div className={styles.tokensSection}>
+              <TokenManager />
+            </div>
+          )}
+
           {activeTab === 'overview' && (
             <div className={styles.overview}>
               <div className={styles.welcomeCard}>
-                <h2 className={styles.welcomeTitle}>Bienvenue sur DiploChain ! 🚀</h2>
+                <h2 className={styles.welcomeTitle}>
+                  Bienvenue sur DiploChain ! 🚀
+                </h2>
                 <p className={styles.welcomeText}>
-                  Votre profil étudiant vous permet de gérer vos diplômes numériques et de consulter vos évaluations professionnelles.
+                  Votre profil étudiant vous permet de gérer vos diplômes
+                  numériques et de consulter vos évaluations professionnelles.
                 </p>
                 <div className={styles.actionButtons}>
                   <button className={styles.primaryAction}>
@@ -121,15 +146,23 @@ export default function StudentsPage() {
                   <div className={styles.activityItem}>
                     <div className={styles.activityIcon}>🎓</div>
                     <div>
-                      <div className={styles.activityTitle}>Diplôme vérifié</div>
-                      <div className={styles.activityDate}>Master en Informatique - il y a 2 jours</div>
+                      <div className={styles.activityTitle}>
+                        Diplôme vérifié
+                      </div>
+                      <div className={styles.activityDate}>
+                        Master en Informatique - il y a 2 jours
+                      </div>
                     </div>
                   </div>
                   <div className={styles.activityItem}>
                     <div className={styles.activityIcon}>⭐</div>
                     <div>
-                      <div className={styles.activityTitle}>Nouvelle évaluation reçue</div>
-                      <div className={styles.activityDate}>TechCorp Solutions - il y a 1 semaine</div>
+                      <div className={styles.activityTitle}>
+                        Nouvelle évaluation reçue
+                      </div>
+                      <div className={styles.activityDate}>
+                        TechCorp Solutions - il y a 1 semaine
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -141,19 +174,25 @@ export default function StudentsPage() {
             <div className={styles.diplomasSection}>
               <div className={styles.sectionHeader}>
                 <h3 className={styles.sectionTitle}>Mes Diplômes NFT</h3>
-                <button className={styles.addButton}>+ Ajouter un diplôme</button>
+                <button className={styles.addButton}>
+                  + Ajouter un diplôme
+                </button>
               </div>
-              
+
               <div className={styles.diplomasGrid}>
-                {mockDiplomas.map((diploma) => (
+                {mockDiplomas.map(diploma => (
                   <div key={diploma.id} className={styles.diplomaCard}>
                     <div className={styles.diplomaHeader}>
                       <div className={styles.diplomaIcon}>🎓</div>
                       <div className={styles.verifiedBadge}>✅ Vérifié</div>
                     </div>
                     <h4 className={styles.diplomaTitle}>{diploma.title}</h4>
-                    <p className={styles.diplomaInstitution}>{diploma.institution}</p>
-                    <p className={styles.diplomaDate}>Obtenu le {diploma.date}</p>
+                    <p className={styles.diplomaInstitution}>
+                      {diploma.institution}
+                    </p>
+                    <p className={styles.diplomaDate}>
+                      Obtenu le {diploma.date}
+                    </p>
                     <div className={styles.nftInfo}>
                       <span className={styles.nftLabel}>Token ID:</span>
                       <span className={styles.nftId}>{diploma.nftId}</span>
@@ -170,25 +209,37 @@ export default function StudentsPage() {
 
           {activeTab === 'evaluations' && (
             <div className={styles.evaluationsSection}>
-              <h3 className={styles.sectionTitle}>Mes Évaluations Professionnelles</h3>
-              
+              <h3 className={styles.sectionTitle}>
+                Mes Évaluations Professionnelles
+              </h3>
+
               <div className={styles.evaluationsList}>
-                {mockEvaluations.map((evaluation) => (
+                {mockEvaluations.map(evaluation => (
                   <div key={evaluation.id} className={styles.evaluationCard}>
                     <div className={styles.evaluationHeader}>
                       <div>
-                        <h4 className={styles.evaluationCompany}>{evaluation.company}</h4>
-                        <p className={styles.evaluationPosition}>{evaluation.position}</p>
+                        <h4 className={styles.evaluationCompany}>
+                          {evaluation.company}
+                        </h4>
+                        <p className={styles.evaluationPosition}>
+                          {evaluation.position}
+                        </p>
                       </div>
                       <div className={styles.ratingDisplay}>
                         <span className={styles.ratingStars}>
                           {'⭐'.repeat(Math.floor(evaluation.rating))}
                         </span>
-                        <span className={styles.ratingNumber}>{evaluation.rating}/5</span>
+                        <span className={styles.ratingNumber}>
+                          {evaluation.rating}/5
+                        </span>
                       </div>
                     </div>
-                    <p className={styles.evaluationComments}>{evaluation.comments}</p>
-                    <p className={styles.evaluationDate}>Évaluée le {evaluation.date}</p>
+                    <p className={styles.evaluationComments}>
+                      {evaluation.comments}
+                    </p>
+                    <p className={styles.evaluationDate}>
+                      Évaluée le {evaluation.date}
+                    </p>
                   </div>
                 ))}
               </div>

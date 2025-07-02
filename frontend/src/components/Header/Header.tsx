@@ -28,7 +28,9 @@ export default function Header({ className = '' }: HeaderProps) {
   const checkWalletConnection = async () => {
     if (typeof window !== 'undefined' && window.ethereum) {
       try {
-        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        const accounts = await window.ethereum.request({
+          method: 'eth_accounts',
+        });
         if (accounts.length > 0) {
           setAccount(accounts[0]);
           await getBalance(accounts[0]);
@@ -55,7 +57,9 @@ export default function Header({ className = '' }: HeaderProps) {
     if (typeof window !== 'undefined' && window.ethereum) {
       try {
         setIsConnecting(true);
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const accounts = await window.ethereum.request({
+          method: 'eth_requestAccounts',
+        });
         setAccount(accounts[0]);
         await getBalance(accounts[0]);
       } catch (error) {
@@ -64,7 +68,9 @@ export default function Header({ className = '' }: HeaderProps) {
         setIsConnecting(false);
       }
     } else {
-      alert('MetaMask n\'est pas installé. Veuillez l\'installer pour continuer.');
+      alert(
+        "MetaMask n'est pas installé. Veuillez l'installer pour continuer."
+      );
     }
   };
 
@@ -86,20 +92,29 @@ export default function Header({ className = '' }: HeaderProps) {
         </div>
 
         <nav className={styles.nav}>
-          <a href="/" className={styles.navLink}>Accueil</a>
-          <a href="/Dashboard/Students" className={styles.navLink}>Étudiants</a>
-          
+          <a href="/" className={styles.navLink}>
+            Accueil
+          </a>
+          <a href="/Dashboard/Students" className={styles.navLink}>
+            Étudiants
+          </a>
+
           {/* Bouton MetaMask intégré dans la navbar */}
           {account ? (
             <div className={styles.walletConnectedNav}>
-              <span className={styles.accountAddressNav}>{formatAddress(account)}</span>
-              <button onClick={disconnectWallet} className={styles.disconnectBtnNav}>
+              <span className={styles.accountAddressNav}>
+                {formatAddress(account)}
+              </span>
+              <button
+                onClick={disconnectWallet}
+                className={styles.disconnectBtnNav}
+              >
                 Déconnecter
               </button>
             </div>
           ) : (
-            <button 
-              onClick={connectWallet} 
+            <button
+              onClick={connectWallet}
               disabled={isConnecting}
               className={styles.connectBtnNav}
             >
@@ -113,9 +128,13 @@ export default function Header({ className = '' }: HeaderProps) {
               )}
             </button>
           )}
-          
-          <a href="/Dashboard/Institutions" className={styles.navLink}>Établissements</a>
-          <a href="/Dashboard/Companies" className={styles.navLink}>Entreprises</a>
+
+          <a href="/Dashboard/Institutions" className={styles.navLink}>
+            Établissements
+          </a>
+          <a href="/Dashboard/Companies" className={styles.navLink}>
+            Entreprises
+          </a>
         </nav>
       </div>
     </header>
