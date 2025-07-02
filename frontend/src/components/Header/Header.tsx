@@ -3,6 +3,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
+import Link from 'next/link';
 import styles from './index.module.scss';
 
 // Déclaration globale pour éviter les erreurs TypeScript
@@ -86,8 +87,8 @@ export default function Header({ className = '' }: HeaderProps) {
         </div>
 
         <nav className={styles.nav}>
-          <a href="/" className={styles.navLink}>Accueil</a>
-          <a href="/Dashboard/Students" className={styles.navLink}>Étudiants</a>
+          <Link href="/" className={styles.navLink}>Accueil</Link>
+          <Link href="/Dashboard/Students" className={styles.navLink}>Étudiants</Link>
           
           {/* Bouton MetaMask intégré dans la navbar */}
           {account ? (
@@ -114,8 +115,8 @@ export default function Header({ className = '' }: HeaderProps) {
             </button>
           )}
           
-          <a href="/Dashboard/Institutions" className={styles.navLink}>Établissements</a>
-          <a href="/Dashboard/Companies" className={styles.navLink}>Entreprises</a>
+          <Link href="/Dashboard/Institutions" className={styles.navLink}>Établissements</Link>
+          <Link href="/Dashboard/Companies" className={styles.navLink}>Entreprises</Link>
         </nav>
       </div>
     </header>

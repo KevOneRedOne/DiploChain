@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import Header from '../components/Header';
 import styles from './index.module.scss';
 
@@ -23,12 +24,12 @@ export default function Home() {
               Sécurisé, transparent et vérifiable instantanément.
             </p>
             <div className={styles.heroButtons}>
-              <a href="/Dashboard/Students" className={styles.primaryBtn}>
+              <Link href="/Dashboard/Students" className={styles.primaryBtn}>
                 Espace Étudiant
-              </a>
-              <a href="/Dashboard/Institutions" className={styles.secondaryBtn}>
+              </Link>
+              <Link href="/Dashboard/Institutions" className={styles.secondaryBtn}>
                 Espace Établissement
-              </a>
+              </Link>
             </div>
           </div>
         </section>

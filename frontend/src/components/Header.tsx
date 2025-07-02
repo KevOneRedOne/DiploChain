@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { useWeb3 } from '../context/Web3Context';
 import NetworkStatus from './Web3/NetworkStatus';
 import WalletConnection from './Web3/WalletConnection';
@@ -22,18 +23,18 @@ const Header: React.FC = () => {
 
           {/* Navigation principale */}
           <nav className="nav">
-            <a href="#" className="nav-link">
+            <Link href="/" className="nav-link">
               Accueil
-            </a>
-            <a href="#institutions" className="nav-link">
+            </Link>
+            <Link href="/Dashboard/Institutions" className="nav-link">
               Établissements
-            </a>
-            <a href="#companies" className="nav-link">
+            </Link>
+            <Link href="/Dashboard/Companies" className="nav-link">
               Entreprises
-            </a>
-            <a href="#students" className="nav-link">
+            </Link>
+            <Link href="/Dashboard/Students" className="nav-link">
               Étudiants
-            </a>
+            </Link>
           </nav>
 
           {/* Section connexion wallet */}
